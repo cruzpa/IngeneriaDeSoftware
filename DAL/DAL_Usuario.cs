@@ -18,7 +18,7 @@ namespace DAL
             acceso.Cerrar();
         }
 
-        public void ReestablecerPassword(BE_Usuario usuario)
+        public void CambiarPassword(BE_Usuario usuario)
         {
             Acceso acceso = new Acceso();
             acceso.Abrir();

@@ -33,7 +33,10 @@
             this.administrarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usuariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ssMenu = new System.Windows.Forms.StatusStrip();
+            this.tsslUsuario = new System.Windows.Forms.ToolStripStatusLabel();
             this.msMenu.SuspendLayout();
+            this.ssMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // msMenu
@@ -60,7 +63,7 @@
             this.administrarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.usuariosToolStripMenuItem});
             this.administrarToolStripMenuItem.Name = "administrarToolStripMenuItem";
-            this.administrarToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.administrarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.administrarToolStripMenuItem.Text = "Administrar";
             // 
             // usuariosToolStripMenuItem
@@ -73,15 +76,32 @@
             // salirToolStripMenuItem
             // 
             this.salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-            this.salirToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.salirToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.salirToolStripMenuItem.Text = "Salir";
             this.salirToolStripMenuItem.Click += new System.EventHandler(this.salirToolStripMenuItem_Click);
+            // 
+            // ssMenu
+            // 
+            this.ssMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsslUsuario});
+            this.ssMenu.Location = new System.Drawing.Point(0, 608);
+            this.ssMenu.Name = "ssMenu";
+            this.ssMenu.Size = new System.Drawing.Size(1113, 22);
+            this.ssMenu.TabIndex = 3;
+            this.ssMenu.Text = "statusStrip1";
+            // 
+            // tsslUsuario
+            // 
+            this.tsslUsuario.Name = "tsslUsuario";
+            this.tsslUsuario.Size = new System.Drawing.Size(118, 17);
+            this.tsslUsuario.Text = "toolStripStatusLabel1";
             // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1113, 630);
+            this.Controls.Add(this.ssMenu);
             this.Controls.Add(this.msMenu);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.msMenu;
@@ -91,6 +111,8 @@
             this.Load += new System.EventHandler(this.Principal_Load);
             this.msMenu.ResumeLayout(false);
             this.msMenu.PerformLayout();
+            this.ssMenu.ResumeLayout(false);
+            this.ssMenu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -103,6 +125,8 @@
         private System.Windows.Forms.ToolStripMenuItem administrarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem salirToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem usuariosToolStripMenuItem;
+        private System.Windows.Forms.StatusStrip ssMenu;
+        private System.Windows.Forms.ToolStripStatusLabel tsslUsuario;
     }
 }
 

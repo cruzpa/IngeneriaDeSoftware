@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BE;
+using Servicios;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,6 +23,9 @@ namespace UI
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             msMenu.Visible = false;
+            SessionManager.Logout();
+            ssMenu.Visible = false;
+            tsslUsuario.Text = "";
             AbrirFormulario<frmLogin>(form);
         }
 
@@ -28,6 +33,8 @@ namespace UI
         {
             msMenu.Enabled = false;
             msMenu.Visible = false;
+            ssMenu.Visible = false;
+            tsslUsuario.Text = "";
             AbrirFormulario<frmLogin>(form);
         }
 
@@ -45,6 +52,12 @@ namespace UI
         {
             form = null;
             msMenu.Enabled = true;
+            ssMenu.Visible = true;
+            SessionManager sesion = SessionManager.GetInstance;
+            if (sesion != null)
+            {
+                tsslUsuario.Text = sesion.usuario.Usuario;
+            }
         }
 
         private void Login(object o, EventArgs e)

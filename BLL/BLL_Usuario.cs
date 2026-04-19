@@ -16,10 +16,10 @@ namespace BLL
             u.Crear (usuario);
         }
 
-        public void ReestablecerPassword (BE_Usuario usuario)
+        public void CambiarPassword (BE_Usuario usuario)
         {
             DAL_Usuario u = new DAL_Usuario();
-            u.ReestablecerPassword(usuario);
+            u.CambiarPassword(usuario);
         }
 
         public BE_Usuario BuscarPorUsuario (string usuario)

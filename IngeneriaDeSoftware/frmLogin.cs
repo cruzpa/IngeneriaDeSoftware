@@ -25,6 +25,12 @@ namespace UI
             Application.Exit();
         }
 
+        private void ClaveModificada(object o, EventArgs e) 
+        {
+            this.Visible = true;
+            this.Close();
+        }
+
         private void btnLogin_Click(object sender, EventArgs e)
         {
             BLL_Usuario u = new BLL_Usuario();
@@ -32,6 +38,17 @@ namespace UI
             if (usuario.Usuario != txtUsuario.Text || usuario.Password != Seguridad.Encriptar(txtPassword.Text))
             {
                 MessageBox.Show("Usuario o contraseña incorrectos");
+                return;
+            }
+
+            SessionManager.Login(usuario);
+
+            if (txtPassword.Text == "cambiar")
+            {
+                frmCambioPassword f = new frmCambioPassword();
+                f.FormClosed += ClaveModificada;
+                this.Visible = false;
+                f.Show();
                 return;
             }
             this.Close();

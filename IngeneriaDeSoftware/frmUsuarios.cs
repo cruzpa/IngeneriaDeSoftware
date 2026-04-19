@@ -109,7 +109,7 @@ namespace UI
                     BLL_Usuario u = new BLL_Usuario();
                     usuario.Usuario = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
                     usuario.Password = Seguridad.Encriptar("cambiar");
-                    u.ReestablecerPassword(usuario);
+                    u.CambiarPassword(usuario);
 
                     CargarListaUsuarios(true);
                     ActualizarGrillaUsuarios();
