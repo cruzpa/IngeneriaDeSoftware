@@ -43,15 +43,25 @@ namespace UI
             DataTable dt = new DataTable();
             dt.Columns.Add("Usuario");
             dt.Columns.Add("Password");
+            dt.Columns.Add("Eliminado");
+            dt.Columns.Add("Intentos Fallidos");
+            dt.Columns.Add("Bloqueado");
             if (usuarios == null) return;
             foreach (BE_Usuario u in usuarios)
             {
                 DataRow dr = dt.NewRow();
                 dr[0] = u.Usuario;
                 dr[1] = u.Password;
+                dr[2] = u.Eliminado;
+                dr[3] = u.IntentosFallidos;
+                dr[4] = u.Bloqueado;
                 dt.Rows.Add(dr);
             }
             dgvUsuarios.DataSource = dt;
+            
+            if (bool.Parse(dgvUsuarios.Rows[0].Cells[2].Value.ToString())) btnBorrar.Text = "Habilitar"; //Fuerza la actualización del botón borrar
+            else btnBorrar.Text = "Borrar";
+            if (bool.Parse(dgvUsuarios.Rows[0].Cells[4].Value.ToString())) btnDesbloquear.Enabled = true; //Fuerza la actualización del botón desbloquear
         }
 
         private void dgvUsuarios_CellEnter(object sender, DataGridViewCellEventArgs e)
@@ -61,6 +71,13 @@ namespace UI
                 if (dgvUsuarios.SelectedRows.Count > 0) 
                 {
                     txtUsuario.Text = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+                    
+                    if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells[2].Value.ToString())) btnBorrar.Text = "Habilitar";
+                    else btnBorrar.Text = "Borrar";
+                    
+                    if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells[4].Value.ToString())) btnDesbloquear.Enabled = true;
+                    else btnDesbloquear.Enabled = false;
+
                 }
             }
             catch (Exception ex)
@@ -91,7 +108,23 @@ namespace UI
         {
             try
             {
+                if (dgvUsuarios.SelectedRows.Count <= 0) return;
+                BE_Usuario usuario = new BE_Usuario();
+                BLL_Usuario u = new BLL_Usuario();
+                usuario.Usuario = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+                
+                if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells[2].Value.ToString())) //Si eliminado = true
+                {
+                    usuario.Eliminado = false;
+                }
+                else //Si eliminado = false
+                {
+                    usuario.Eliminado= true;
+                }
+                u.Modificar(usuario);
 
+                CargarListaUsuarios(true);
+                ActualizarGrillaUsuarios();
             }
             catch (Exception ex)
             {
@@ -120,6 +153,31 @@ namespace UI
                 MessageBox.Show("Ocurrió un problema al intentar reestablecer la contraseña");
             }
 
+        }
+
+        private void btnDesbloquear_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dgvUsuarios.SelectedRows.Count <= 0) return;
+                BE_Usuario usuario = new BE_Usuario();
+                BLL_Usuario u = new BLL_Usuario();
+                usuario.Usuario = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+
+                if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells[4].Value.ToString())) //Si bloqueado = true
+                {
+                    usuario.Bloqueado = false;
+                }
+                u.Modificar(usuario);
+                u.ReiniciarIntentosFallidos(usuario);
+
+                CargarListaUsuarios(true);
+                ActualizarGrillaUsuarios();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un problema durante el desbloqueo del usuario");
+            }
         }
     }
 }

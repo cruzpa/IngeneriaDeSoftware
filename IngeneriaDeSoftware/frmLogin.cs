@@ -35,13 +35,60 @@ namespace UI
         {
             BLL_Usuario u = new BLL_Usuario();
             BE_Usuario usuario = u.BuscarPorUsuario(txtUsuario.Text);
-            if (usuario.Usuario != txtUsuario.Text || usuario.Password != Seguridad.Encriptar(txtPassword.Text))
+            BE_Bitacora bitacora = new BE_Bitacora();
+            BLL_Bitacora b = new BLL_Bitacora();
+
+            if (usuario.Bloqueado == true) 
+            {
+                MessageBox.Show("El usuario se encuentra bloqueado");
+                
+                bitacora.Usuario = "Sin usuario";
+                bitacora.FechaYHora = DateTime.UtcNow.ToString();
+                bitacora.Tipo = "WARNING";
+                bitacora.Descripcion = $"Intento de ingreso con el usuario \"{txtUsuario.Text}\" que se encuentra bloqueado";
+
+                b.Crear(bitacora);
+
+                return;
+            }
+
+            if (usuario.Usuario != txtUsuario.Text)
             {
                 MessageBox.Show("Usuario o contraseña incorrectos");
+                
+                bitacora.Usuario = "Sin usuario";
+                bitacora.FechaYHora = DateTime.UtcNow.ToString();
+                bitacora.Tipo = "WARNING";
+                bitacora.Descripcion = $"Intento fallido de ingreso con usuario inexistente: \"{txtUsuario.Text}\"";
+
+                b.Crear(bitacora);
+
+                return;
+            }
+
+            if (usuario.Password != Seguridad.Encriptar(txtPassword.Text))
+            {
+                MessageBox.Show("Usuario o contraseña incorrectos");
+
+                u.IncrementarIntentosFallidos(usuario);
+
+                bitacora.Usuario = "Sin usuario";
+                bitacora.FechaYHora = DateTime.UtcNow.ToString();
+                bitacora.Tipo = "WARNING";
+                bitacora.Descripcion = $"Intento fallido de ingreso con el usuario \"{txtUsuario.Text}\"";
+
+                b.Crear(bitacora);
+
                 return;
             }
 
             SessionManager.Login(usuario);
+            bitacora.Usuario = SessionManager.GetInstance.usuario.Usuario;
+            bitacora.FechaYHora = DateTime.UtcNow.ToString();
+            bitacora.Tipo = "INFO";
+            bitacora.Descripcion = $"Ingreso al sistema";
+
+            b.Crear(bitacora);
 
             if (txtPassword.Text == "cambiar")
             {
@@ -51,6 +98,13 @@ namespace UI
                 f.Show();
                 return;
             }
+
+            if (usuario.IntentosFallidos != 0)
+            {
+                usuario.IntentosFallidos = 0;
+                u.ReiniciarIntentosFallidos(usuario);
+            }
+
             this.Close();
         }
     }

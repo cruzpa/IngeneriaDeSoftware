@@ -33,5 +33,20 @@ namespace BLL
             DAL_Usuario u = new DAL_Usuario();
             return u.BuscarUsuarios(incluireliminados);
         }
+        public void Modificar (BE_Usuario usuario)
+        {
+            DAL_Usuario u = new DAL_Usuario();
+            u.Modificar(usuario);
+        }
+        public void IncrementarIntentosFallidos(BE_Usuario usuario)
+        {
+            DAL_Usuario u = new DAL_Usuario();
+            u.IncrementarIntentosFallidos(usuario);
+        }
+        public void ReiniciarIntentosFallidos(BE_Usuario usuario)
+        {
+            DAL_Usuario u = new DAL_Usuario();
+            u.ReiniciarIntentosFallidos(usuario);
+        }
     }
 }

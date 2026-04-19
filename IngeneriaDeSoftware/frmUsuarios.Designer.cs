@@ -35,6 +35,7 @@
             this.btnCrear = new System.Windows.Forms.Button();
             this.btnBorrar = new System.Windows.Forms.Button();
             this.btnReestablecerPassword = new System.Windows.Forms.Button();
+            this.btnDesbloquear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,10 +51,13 @@
             // 
             // dgvUsuarios
             // 
+            this.dgvUsuarios.AllowUserToAddRows = false;
+            this.dgvUsuarios.AllowUserToDeleteRows = false;
             this.dgvUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUsuarios.Location = new System.Drawing.Point(12, 12);
             this.dgvUsuarios.MultiSelect = false;
             this.dgvUsuarios.Name = "dgvUsuarios";
+            this.dgvUsuarios.ReadOnly = true;
             this.dgvUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvUsuarios.Size = new System.Drawing.Size(776, 262);
             this.dgvUsuarios.TabIndex = 1;
@@ -105,11 +109,22 @@
             this.btnReestablecerPassword.UseVisualStyleBackColor = true;
             this.btnReestablecerPassword.Click += new System.EventHandler(this.btnReestablecerPassword_Click);
             // 
+            // btnDesbloquear
+            // 
+            this.btnDesbloquear.Location = new System.Drawing.Point(511, 357);
+            this.btnDesbloquear.Name = "btnDesbloquear";
+            this.btnDesbloquear.Size = new System.Drawing.Size(75, 23);
+            this.btnDesbloquear.TabIndex = 7;
+            this.btnDesbloquear.Text = "Desbloquear";
+            this.btnDesbloquear.UseVisualStyleBackColor = true;
+            this.btnDesbloquear.Click += new System.EventHandler(this.btnDesbloquear_Click);
+            // 
             // frmUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnDesbloquear);
             this.Controls.Add(this.btnReestablecerPassword);
             this.Controls.Add(this.btnBorrar);
             this.Controls.Add(this.btnCrear);
@@ -135,5 +150,6 @@
         private System.Windows.Forms.Button btnCrear;
         private System.Windows.Forms.Button btnBorrar;
         private System.Windows.Forms.Button btnReestablecerPassword;
+        private System.Windows.Forms.Button btnDesbloquear;
     }
 }

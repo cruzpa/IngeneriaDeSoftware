@@ -10,5 +10,8 @@ namespace BE
     {
         public string Usuario { get; set; }
         public string Password { get; set; }
+        public bool Eliminado { get; set; }
+        public int IntentosFallidos { get; set; }
+        public bool Bloqueado { get; set; }
     }
 }
