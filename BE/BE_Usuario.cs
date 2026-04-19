@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL
+namespace BE
 {
-    public class Class1
+    public class BE_Usuario
     {
+        public string Usuario { get; set; }
+        public string Password { get; set; }
     }
 }

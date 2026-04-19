@@ -12,7 +12,8 @@ namespace DAL
         public void Abrir()
         {
             conexion = new SqlConnection();
-            conexion.ConnectionString = "Initial catalog=campo; Data Source=.;integrated security=SSPI";            conexion.Open();
+            conexion.ConnectionString = "Initial catalog=TP; Data Source=DESKTOP-JRRFOTR.;integrated security=SSPI";
+            conexion.Open();
         }
 
         public void Cerrar()
