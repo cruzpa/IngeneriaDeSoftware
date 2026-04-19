@@ -1,6 +1,6 @@
 <Solution>
-  <Project Path="BE/BE.csproj" />
-  <Project Path="BLL/BLL.csproj" />
-  <Project Path="DAL/DAL.csproj" />
-  <Project Path="IngeneriaDeSoftware/IngeneriaDeSoftware.csproj" />
+  <Project Path="BE/BE.csproj" Id="307a8cee-f7fd-47c8-a33a-d0a03fa06fbc" />
+  <Project Path="BLL/BLL.csproj" Id="3af711ed-9f6b-4474-8757-2260c1822370" />
+  <Project Path="DAL/DAL.csproj" Id="115c9174-1425-4762-8c76-7b885997ad15" />
+  <Project Path="IngeneriaDeSoftware/IngeneriaDeSoftware.csproj" Id="87bb15c1-8f42-44d6-991b-3ca886728e4f" />
 </Solution>
