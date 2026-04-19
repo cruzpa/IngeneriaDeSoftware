@@ -10,17 +10,18 @@ using System.Windows.Forms;
 
 namespace UI
 {
-    public partial class Principal : Form
+    public partial class frmPrincipal : Form
     {
         Form form;
-        public Principal()
+        public frmPrincipal()
         {
             InitializeComponent();
         }
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            msMenu.Visible = false;
+            AbrirFormulario<frmLogin>(form);
         }
 
         private void Principal_Load(object sender, EventArgs e)
@@ -36,6 +37,7 @@ namespace UI
             if (typeof(T) == typeof(frmLogin)) f.FormClosed += Login;
             f.MdiParent = this;
             f.FormClosed += ResetForm;
+            msMenu.Enabled = false;
             f.Show();
         }
 
@@ -48,6 +50,11 @@ namespace UI
         private void Login(object o, EventArgs e)
         {
             msMenu.Visible = true;
+        }
+
+        private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormulario<frmUsuarios>(form);
         }
     }
 }

@@ -10,15 +10,28 @@ namespace BLL
 {
     public class BLL_Usuario
     {
-        public int Crear (BE_Usuario usuario)
+        public void Crear (BE_Usuario usuario)
         {
-            return 0;
+            DAL_Usuario u = new DAL_Usuario();
+            u.Crear (usuario);
+        }
+
+        public void ReestablecerPassword (BE_Usuario usuario)
+        {
+            DAL_Usuario u = new DAL_Usuario();
+            u.ReestablecerPassword(usuario);
         }
 
         public BE_Usuario BuscarPorUsuario (string usuario)
         {
-            DAL_Usuario u = new DAL_Usuario ();
+            DAL_Usuario u = new DAL_Usuario();
             return u.BuscarPorUsuario(usuario);
+        }
+
+        public List<BE_Usuario> BuscarUsuarios(bool incluireliminados)
+        {
+            DAL_Usuario u = new DAL_Usuario();
+            return u.BuscarUsuarios(incluireliminados);
         }
     }
 }
