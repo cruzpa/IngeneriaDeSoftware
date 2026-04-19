@@ -1,0 +1,112 @@
+USE [TP]
+GO
+/****** Object:  Table [dbo].[Bitacora]    Script Date: 19/04/2026 20:28:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Bitacora](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Usuario] [varchar](50) NULL,
+	[FechaYHora] [varchar](50) NOT NULL,
+	[Tipo] [varchar](50) NOT NULL,
+	[Descripcion] [varchar](100) NOT NULL,
+ CONSTRAINT [PK_Bitacora] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Usuario]    Script Date: 19/04/2026 20:28:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Usuario](
+	[Usuario] [varchar](50) NOT NULL,
+	[Password] [varchar](50) NOT NULL,
+	[Eliminado] [bit] NOT NULL,
+	[IntentosFallidos] [int] NOT NULL,
+	[Bloqueado] [bit] NOT NULL,
+ CONSTRAINT [PK_Usuario] PRIMARY KEY CLUSTERED 
+(
+	[Usuario] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Bitacora] ON 
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (1, N'Sin usuario', N'19/04/2026 21:42:37', N'WARNING', N'Intento fallido de ingreso con el usuario Invitado')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (2, N'Martin', N'19/04/2026 21:47:33', N'INFO', N'Ingreso al sistema el usuario "Martin"')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (3, N'Sin usuario', N'19/04/2026 21:47:42', N'WARNING', N'Intento fallido de ingreso con el usuario "Pedro"')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (4, N'Sin usuario', N'19/04/2026 22:17:56', N'WARNING', N'Intento fallido de ingreso con usuario inexistente: "NoExisto"')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (5, N'Sin usuario', N'19/04/2026 22:18:04', N'WARNING', N'Intento fallido de ingreso con el usuario "Martin"')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (6, N'Sin usuario', N'19/04/2026 22:18:20', N'WARNING', N'Intento de ingreso con el usuario "Martin" que se encuentra bloqueado')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (7, N'Sin usuario', N'19/04/2026 22:23:12', N'WARNING', N'Intento fallido de ingreso con el usuario "Martin"')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (8, N'Sin usuario', N'19/04/2026 22:23:16', N'WARNING', N'Intento fallido de ingreso con el usuario "Martin"')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (9, N'Sin usuario', N'19/04/2026 22:23:20', N'WARNING', N'Intento fallido de ingreso con el usuario "Martin"')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (10, N'Sin usuario', N'19/04/2026 22:23:22', N'WARNING', N'Intento fallido de ingreso con el usuario "Martin"')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (11, N'Sin usuario', N'19/04/2026 22:23:26', N'WARNING', N'Intento fallido de ingreso con el usuario "Martin"')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (12, N'Sin usuario', N'19/04/2026 22:23:29', N'WARNING', N'Intento fallido de ingreso con el usuario "Martin"')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (13, N'Sin usuario', N'19/04/2026 22:23:34', N'WARNING', N'Intento de ingreso con el usuario "Martin" que se encuentra bloqueado')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (14, N'Sin usuario', N'19/04/2026 22:23:37', N'WARNING', N'Intento de ingreso con el usuario "Martin" que se encuentra bloqueado')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (15, N'Sin usuario', N'19/04/2026 22:49:45', N'WARNING', N'Intento de ingreso con el usuario "Martin" que se encuentra bloqueado')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (16, N'Pablo', N'19/04/2026 22:49:54', N'INFO', N'Ingreso al sistema')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (17, N'Martin', N'19/04/2026 22:52:04', N'INFO', N'Ingreso al sistema')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (18, N'Sin usuario', N'19/04/2026 22:52:16', N'WARNING', N'Intento fallido de ingreso con el usuario "Martin"')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (19, N'Sin usuario', N'19/04/2026 22:52:17', N'WARNING', N'Intento fallido de ingreso con el usuario "Martin"')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (20, N'Sin usuario', N'19/04/2026 22:52:18', N'WARNING', N'Intento fallido de ingreso con el usuario "Martin"')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (21, N'Sin usuario', N'19/04/2026 22:52:19', N'WARNING', N'Intento fallido de ingreso con el usuario "Martin"')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (22, N'Sin usuario', N'19/04/2026 22:52:20', N'WARNING', N'Intento fallido de ingreso con el usuario "Martin"')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (23, N'Sin usuario', N'19/04/2026 22:52:22', N'WARNING', N'Intento fallido de ingreso con el usuario "Martin"')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (24, N'Sin usuario', N'19/04/2026 22:52:24', N'WARNING', N'Intento de ingreso con el usuario "Martin" que se encuentra bloqueado')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (25, N'Pablo', N'19/04/2026 22:52:32', N'INFO', N'Ingreso al sistema')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (26, N'Sin usuario', N'19/04/2026 22:52:55', N'WARNING', N'Intento fallido de ingreso con el usuario "Martin"')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (27, N'Pablo', N'19/04/2026 22:53:01', N'INFO', N'Ingreso al sistema')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (28, N'Martin', N'19/04/2026 22:53:13', N'INFO', N'Ingreso al sistema')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (29, N'Martin', N'19/04/2026 23:08:49', N'INFO', N'Ingreso al sistema')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (30, N'Martin', N'19/04/2026 23:11:18', N'INFO', N'Ingreso al sistema')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (31, N'Martin', N'19/04/2026 23:14:03', N'INFO', N'Ingreso al sistema')
+GO
+INSERT [dbo].[Bitacora] ([Id], [Usuario], [FechaYHora], [Tipo], [Descripcion]) VALUES (32, N'Martin', N'19/04/2026 23:17:56', N'INFO', N'Ingreso al sistema')
+GO
+SET IDENTITY_INSERT [dbo].[Bitacora] OFF
+GO
+INSERT [dbo].[Usuario] ([Usuario], [Password], [Eliminado], [IntentosFallidos], [Bloqueado]) VALUES (N'Juan', N'gC2Q+pQdgHBl/HXXUzmQIg==', 0, 0, 0)
+GO
+INSERT [dbo].[Usuario] ([Usuario], [Password], [Eliminado], [IntentosFallidos], [Bloqueado]) VALUES (N'Martin', N'ABo2yERwkdZ0rj6aWGpI3g==', 0, 0, 0)
+GO
+INSERT [dbo].[Usuario] ([Usuario], [Password], [Eliminado], [IntentosFallidos], [Bloqueado]) VALUES (N'Pablo', N'1fhIbknu9DLXwA+bWNY1Vw==', 0, 0, 0)
+GO
+INSERT [dbo].[Usuario] ([Usuario], [Password], [Eliminado], [IntentosFallidos], [Bloqueado]) VALUES (N'Pedro', N'hb0e/4kwoKYD7kAu8269qQ==', 0, 0, 0)
+GO

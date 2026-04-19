@@ -69,5 +69,10 @@ namespace UI
         {
             AbrirFormulario<frmUsuarios>(form);
         }
+
+        private void bitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormulario<frmBitacora>(form);
+        }
     }
 }

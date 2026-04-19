@@ -35,6 +35,7 @@
             this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ssMenu = new System.Windows.Forms.StatusStrip();
             this.tsslUsuario = new System.Windows.Forms.ToolStripStatusLabel();
+            this.bitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.msMenu.SuspendLayout();
             this.ssMenu.SuspendLayout();
             this.SuspendLayout();
@@ -42,7 +43,8 @@
             // msMenu
             // 
             this.msMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuToolStripMenuItem});
+            this.menuToolStripMenuItem,
+            this.bitToolStripMenuItem});
             this.msMenu.Location = new System.Drawing.Point(0, 0);
             this.msMenu.Name = "msMenu";
             this.msMenu.Size = new System.Drawing.Size(1113, 24);
@@ -96,6 +98,13 @@
             this.tsslUsuario.Size = new System.Drawing.Size(118, 17);
             this.tsslUsuario.Text = "toolStripStatusLabel1";
             // 
+            // bitToolStripMenuItem
+            // 
+            this.bitToolStripMenuItem.Name = "bitToolStripMenuItem";
+            this.bitToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+            this.bitToolStripMenuItem.Text = "Bitacora";
+            this.bitToolStripMenuItem.Click += new System.EventHandler(this.bitToolStripMenuItem_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -127,6 +136,7 @@
         private System.Windows.Forms.ToolStripMenuItem usuariosToolStripMenuItem;
         private System.Windows.Forms.StatusStrip ssMenu;
         private System.Windows.Forms.ToolStripStatusLabel tsslUsuario;
+        private System.Windows.Forms.ToolStripMenuItem bitToolStripMenuItem;
     }
 }
 

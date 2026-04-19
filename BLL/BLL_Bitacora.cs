@@ -15,14 +15,17 @@ namespace BLL
             DAL_Bitacora b = new DAL_Bitacora();
             b.Crear(bitacora);
         }
-        public List<BE_Bitacora> Buscar()
+        public List<BE_Bitacora> Buscar(string tipo, string fechaInicio)
         {
             List<BE_Bitacora> lista = new List<BE_Bitacora>();
-
-
-
-
-            return lista;
+            DAL_Bitacora b = new DAL_Bitacora();
+            return b.Buscar(tipo, fechaInicio);
+        }
+        public List<BE_Bitacora> Buscar(string tipo, string fechaInicio, string fechafin)
+        {
+            List<BE_Bitacora> lista = new List<BE_Bitacora>();
+            DAL_Bitacora b = new DAL_Bitacora();
+            return b.Buscar(tipo, fechaInicio, fechafin);
         }
     }
 }
