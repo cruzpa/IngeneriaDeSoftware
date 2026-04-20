@@ -9,6 +9,12 @@ namespace BLL
     public class UsuarioService
     {
         DAL.MapperUsuario mp = new DAL.MapperUsuario();
+
+        public void IniciarSesion(BE.Usuario u)
+        {
+            mp.IniciarSesion(u);
+        }
+
         public void Grabar(BE.Usuario u)
         {
             if (u.Id == 0)

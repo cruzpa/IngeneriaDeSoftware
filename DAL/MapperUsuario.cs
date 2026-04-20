@@ -61,5 +61,9 @@ namespace DAL
             return usuarios;
         }
 
+        public void IniciarSesion(Usuario u)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
