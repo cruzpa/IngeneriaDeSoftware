@@ -10,7 +10,7 @@ namespace DAL
     public class Login
     {
         //todo: falta crear singleton de usuario.
-        public void IniciarSesion(string username, string password)
+        public BE.Usuario IniciarSesion(string username, string password)
         {
             BE.Usuario usuario = null;
             Acceso acceso = new Acceso();
@@ -30,6 +30,7 @@ namespace DAL
                 usuario.Password = reader["Password"].ToString();
             }
             acceso.Cerrar();
+            return usuario;
         }
     }
 }

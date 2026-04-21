@@ -14,6 +14,7 @@ namespace IngeneriaDeSoftware
     {
         BE.Usuario usuario;
         BLL.LoginService loginService = new BLL.LoginService();
+        BLL.UsuarioService usuarioService = new BLL.UsuarioService();
 
         public FormLogin()
         {
@@ -25,13 +26,31 @@ namespace IngeneriaDeSoftware
             usuario = new BE.Usuario();
             usuario.Username = textBox1.Text;
             usuario.Password = textBox2.Text;
-            loginService.IniciarSesion(usuario);
-
+            Console.WriteLine($"Try login: usuario: {usuario.Username}, pass length: {usuario.Password}");
+            bool ok = loginService.IniciarSesion(usuario);
+            if (!ok)
+            {
+                MessageBox.Show(
+                    "Usuario o contraseña incorrectos",
+                    "Error de login",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
             usuario = null;
         }
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            usuario = new BE.Usuario();
+            usuario.Username = textBox1.Text;
+            usuario.Password = textBox2.Text;
+            Console.WriteLine($"Try register: usuario: {usuario.Username}, pass length: {usuario.Password}");
+
+            usuarioService.Grabar(usuario);
         }
     }
 }
