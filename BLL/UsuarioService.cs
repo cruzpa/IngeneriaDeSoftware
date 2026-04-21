@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BE;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,26 +16,27 @@ namespace BLL
             mp.IniciarSesion(u);
         }
 
-        public void Grabar(BE.Usuario u)
+        public int Grabar(BE.Usuario u)
         {
             if (u.Id == 0)
             {
-                mp.Insertar(u);
+                Console.WriteLine($"Try register: usuario: {u.Username}, pass length: {u.Password}");
+                return mp.Insertar(u);
             } else
             {
-                mp.Editar(u);
+                return mp.Editar(u);
             }
         }
 
-        public void Borrar(BE.Usuario u)
+        public int Borrar(BE.Usuario u)
         {
-            mp.Borrar(u);
+            return mp.Borrar(u);
 
         }
 
-        public void Listar()
+        public List<Usuario> Listar()
         {
-            mp.Listar();  
+            return mp.Listar();  
         }
 
 

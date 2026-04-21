@@ -15,12 +15,35 @@ namespace DAL
             acceso = new Acceso();
             acceso.Abrir();
 
-            List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(acceso.CrearParametro("@nombre", u.Name));
+            // Verifica si el username ya existe
+            var parametros = new List<SqlParameter>();
+            parametros.Add(acceso.CrearParametro("@username", u.Username));
+            string queryCheck = "SELECT COUNT(1) FROM Usuario WHERE Username = @username";
+            int existe = acceso.LeerEscalar(queryCheck, parametros);
+
+            if (existe > 0)
+            {
+                acceso.Cerrar();
+                Console.WriteLine($"Ya existe el usuario, no insertar. ");
+
+                // Ya existe el usuario, no insertar
+                return 0;
+            }
+
+            // Obtén el siguiente Id de forma segura
+            string queryId = "SELECT ISNULL(MAX(Id), 0) + 1 FROM Usuario";
+            int nuevoId = acceso.LeerEscalar(queryId);
+
+            // Inserta el nuevo usuario
+            parametros.Clear();
+            parametros.Add(acceso.CrearParametro("@id", nuevoId));
+            parametros.Add(acceso.CrearParametro("@name", "nombreGenerico"));
             parametros.Add(acceso.CrearParametro("@username", u.Username));
             parametros.Add(acceso.CrearParametro("@password", u.Password));
-            string query = "INSERT INTO Usuario (Id, Nombre, Username, Password)\r\nSELECT ISNULL(MAX(Id), 0) + 1, @nombre, @username, @password\r\nFROM Usuario\r\nWHERE NOT EXISTS (\r\n    SELECT 1 \r\n    FROM Usuario \r\n    WHERE Username = @username\r\n);";
-            int res = acceso.Escribir(query, parametros);
+            string queryInsert = "INSERT INTO Usuario (Id, Name, Username, Password) VALUES (@id, @name, @username, @password)";
+            int res = acceso.Escribir(queryInsert, parametros);
+
+            Console.WriteLine($"Resultado del registro: {res == 1}"); 
             acceso.Cerrar();
             return res;
         }

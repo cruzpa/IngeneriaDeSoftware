@@ -19,6 +19,7 @@ namespace IngeneriaDeSoftware
         public FormLogin()
         {
             InitializeComponent();
+            button2.Hide();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -50,7 +51,22 @@ namespace IngeneriaDeSoftware
             usuario.Password = textBox2.Text;
             Console.WriteLine($"Try register: usuario: {usuario.Username}, pass length: {usuario.Password}");
 
-            usuarioService.Grabar(usuario);
+            int res = usuarioService.Grabar(usuario);
+            if (res == 1)
+            {
+                MessageBox.Show(
+                    "Registrado con exito",
+                    "Registro",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }else
+            {
+                MessageBox.Show(
+                    "Error al registrar",
+                    "Registro",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace DAL
@@ -13,7 +14,8 @@ namespace DAL
         public void Abrir()
         {
             conexion = new SqlConnection();
-            conexion.ConnectionString = "Initial catalog=campo; Data Source=.;integrated security=SSPI";            conexion.Open();
+            conexion.ConnectionString = "Initial catalog=campo; Data Source=.;integrated security=SSPI";            
+            conexion.Open();
         }
 
         public void Cerrar()
@@ -21,6 +23,32 @@ namespace DAL
             conexion.Close();
             conexion=null;
             GC.Collect();   
+        }
+
+        public void iniciarTx()
+        {
+            if(conexion.State == ConnectionState.Open)
+            {
+                tx = conexion.BeginTransaction();
+            }
+        }
+
+        public void confirmarTx()
+        {
+            if(tx != null)
+            {
+                tx.Commit();
+                tx = null;
+            }
+        }
+
+        public void cancelarTx()
+        {
+            if(tx != null)
+            {
+                tx.Rollback();
+                tx = null;
+            }
         }
 
         public SqlCommand CrearComando(string sql, List<SqlParameter> parameters = null)
@@ -32,6 +60,10 @@ namespace DAL
             if(parameters != null)
             {
                 cmd.Parameters.AddRange(parameters.ToArray());
+            }
+            if(tx != null)
+            {
+                cmd.Transaction = tx;
             }
             return cmd;
         }
