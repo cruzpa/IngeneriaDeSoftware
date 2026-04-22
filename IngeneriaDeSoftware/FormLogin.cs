@@ -19,7 +19,9 @@ namespace IngeneriaDeSoftware
         public FormLogin()
         {
             InitializeComponent();
-            button2.Hide();
+            //button2.Hide();
+            //dataGridView1.Hide();
+            Enlazar();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -37,7 +39,19 @@ namespace IngeneriaDeSoftware
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
+            else
+            {
+                MessageBox.Show(
+                    "Bienvenido",
+                    "Login",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                //FormPrincipal formPrincipal = new FormPrincipal();
+                //formPrincipal.Show();
+                //this.Hide();
+            }
             usuario = null;
+            Enlazar();
         }
 
         private void FormLogin_Load(object sender, EventArgs e)
@@ -67,6 +81,18 @@ namespace IngeneriaDeSoftware
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
+            Enlazar();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void Enlazar()
+        {
+            dataGridView1.DataSource = usuarioService.Listar();
+
         }
     }
 }

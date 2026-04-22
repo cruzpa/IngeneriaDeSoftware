@@ -9,7 +9,6 @@ namespace DAL
 {
     public class Login
     {
-        //todo: falta crear singleton de usuario.
         public BE.Usuario IniciarSesion(string username, string password)
         {
             BE.Usuario usuario = null;

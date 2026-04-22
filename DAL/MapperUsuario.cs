@@ -80,13 +80,14 @@ namespace DAL
             acceso = new Acceso();
             acceso.Abrir();
 
-            SqlDataReader reader = acceso.Leer("SELECT Id, Nombre, Username, Password FROM Usuario");
+            SqlDataReader reader = acceso.Leer("SELECT Id, Name, Username, Password FROM Usuario");
             while (reader.Read())
             {
                 Usuario u = new Usuario();
                 u.Id  = reader.GetInt32(0);
                 u.Name = reader.GetString(1);
                 u.Username = reader.GetString(2);
+                u.Password = reader.GetString(3);
                 usuarios.Add(u);
             }
             reader.Close();

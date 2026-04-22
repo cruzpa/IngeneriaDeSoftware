@@ -1,19 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Collections.Specialized.BitVector32;
 
 namespace BLL
 {
     public class LoginService
     {
         internal DAL.Login login = new DAL.Login();
+        private SecurityService security = new SecurityService();
 
         public bool IniciarSesion(BE.Usuario u)
         {
-            BE.Usuario usuario = login.IniciarSesion(u.Username, u.Password);
+            if (security.ValidarPassword(u.Password).Any())
+            {
+                return false;
+            }
+            string passwordHash = security.HashPassword(u.Password);
+            BE.Usuario usuario = login.IniciarSesion(u.Username, passwordHash);
+
             if (usuario != null)
             {
                 Sesion.Instancia.Login(usuario);
