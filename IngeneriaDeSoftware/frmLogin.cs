@@ -34,6 +34,8 @@ namespace UI
         private void btnLogin_Click(object sender, EventArgs e)
         {
             BLL_Usuario u = new BLL_Usuario();
+
+            //aca crear un LoginService como esta en mi branch y que haga toda las validaciones de login y retorne resultado booleano para menssage.Box
             BE_Usuario usuario = u.BuscarPorUsuario(txtUsuario.Text);
             BE_Bitacora bitacora = new BE_Bitacora();
             BLL_Bitacora b = new BLL_Bitacora();

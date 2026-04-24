@@ -14,8 +14,13 @@ namespace DAL
         {
             Acceso acceso = new Acceso();
             acceso.Abrir();
+            ////usar sqlParameter para evitar inyeccion sql
+            //var parametros = new List<SqlParameter>();
+            //parametros.Add(acceso.CrearParametro("@username", u.Username));
+            //string queryCheck = "SELECT COUNT(1) FROM Usuario WHERE Username = @username";
             acceso.Escribir($"insert into Bitacora (Usuario, FechaYHora, Tipo, Descripcion) values ('{bitacora.Usuario}', '{bitacora.FechaYHora}', '{bitacora.Tipo}', '{bitacora.Descripcion}')");
             acceso.Cerrar();
+            //
         }
 
         public List<BE_Bitacora> Buscar(string tipo, string fechaInicio)

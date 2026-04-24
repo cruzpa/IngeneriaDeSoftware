@@ -10,6 +10,8 @@ namespace BLL
 {
     public class BLL_Bitacora
     {
+        // DAL_Bitacora b = new DAL_Bitacora();
+        //sacar de los metodos
         public void Crear(BE_Bitacora bitacora)
         {
             DAL_Bitacora b = new DAL_Bitacora();

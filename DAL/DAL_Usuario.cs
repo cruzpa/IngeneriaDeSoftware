@@ -10,6 +10,9 @@ namespace DAL
 {
     public class DAL_Usuario
     {
+        //Acceso acceso = new Acceso();
+        //sacarlo de los metodos 
+        //usar sqlParameter para evitar inyeccion sql
         public void Crear(BE_Usuario usuario)
         {
             Acceso acceso = new Acceso();
@@ -82,6 +85,7 @@ namespace DAL
         {
             Acceso acceso = new Acceso();
             acceso.Abrir();
+            //mover logica a BLL para que no haya logica de negocio en DAL y agregar funciones Desbloquear, Bloquear, Eliminar, Restaurar
             if (usuario.Eliminado && usuario.Bloqueado) acceso.Escribir($"update Usuario set Usuario.Eliminado = 1, Usuario.Bloqueado = 1 where Usuario.Usuario = '{usuario.Usuario}'");
             else if (usuario.Eliminado && !usuario.Bloqueado) acceso.Escribir($"update Usuario set Usuario.Eliminado = 1, Usuario.Bloqueado = 0 where Usuario.Usuario = '{usuario.Usuario}'");
             else if (!usuario.Eliminado && usuario.Bloqueado) acceso.Escribir($"update Usuario set Usuario.Eliminado = 0, Usuario.Bloqueado = 1 where Usuario.Usuario = '{usuario.Usuario}'");
@@ -91,6 +95,7 @@ namespace DAL
 
         public void IncrementarIntentosFallidos(BE_Usuario usuario)
         {
+            //mover logica a BLL para que no haya logica de negocio en DAL
             if (usuario.IntentosFallidos > 4)
             {
                 usuario.Bloqueado = true;

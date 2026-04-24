@@ -10,10 +10,13 @@ namespace BLL
 {
     public class BLL_Usuario
     {
+        //
+        //DAL_Usuario u = new DAL_Usuario();
+        //sacarlo de los metodos
         public void Crear (BE_Usuario usuario)
         {
             DAL_Usuario u = new DAL_Usuario();
-            u.Crear (usuario);
+            u.Crear(usuario);
         }
 
         public void CambiarPassword (BE_Usuario usuario)

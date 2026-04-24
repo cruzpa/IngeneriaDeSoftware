@@ -23,6 +23,7 @@ namespace DAL
             GC.Collect();   
         }
 
+        //agregar qparams para evitar injeccion sql
         public SqlCommand CrearComando(string sql)
         {
             SqlCommand cmd = new SqlCommand();
@@ -35,7 +36,7 @@ namespace DAL
         public int Escribir(String sql)
         {
             SqlCommand cmd = CrearComando(sql);
-            int filas = 0;
+            int filas = 0; //cantidad de filas afectadas
 
             try
             {
