@@ -8,13 +8,13 @@ using BE;
 
 namespace Servicios
 {
-    public class SessionManager
+    public class BLL_SessionManager
     {
-        private static SessionManager _session;
+        private static BLL_SessionManager _session;
         private static object _lock = new object();
         public BE_Usuario usuario { get; set; }
 
-        public static SessionManager GetInstance
+        public static BLL_SessionManager GetInstance
         {
             get 
             {
@@ -28,7 +28,7 @@ namespace Servicios
             {
                 if (_session == null)
                 {
-                    _session = new SessionManager();
+                    _session = new BLL_SessionManager();
                     _session.usuario = usuario;
                 }
                 else
@@ -53,7 +53,7 @@ namespace Servicios
             }
         }
 
-        private SessionManager() 
+        private BLL_SessionManager() 
         {
 
         }

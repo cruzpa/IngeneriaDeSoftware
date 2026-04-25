@@ -41,7 +41,7 @@ namespace UI
             {
                 MessageBox.Show("El usuario se encuentra bloqueado");
                 
-                bitacora.Username = "Sin usuario";
+                bitacora.Usuario = "Sin usuario";
                 bitacora.FechaYHora = DateTime.UtcNow;
                 bitacora.Tipo = "WARNING";
                 bitacora.Descripcion = $"Intento de ingreso con el usuario \"{txtUsuario.Text}\" que se encuentra bloqueado";
@@ -51,11 +51,11 @@ namespace UI
                 return;
             }
 
-            if (usuario.Username != txtUsuario.Text)
+            if (usuario.User != txtUsuario.Text)
             {
                 MessageBox.Show("Usuario o contraseña incorrectos");
                 
-                bitacora.Username = "Sin usuario";
+                bitacora.Usuario = "Sin usuario";
                 bitacora.FechaYHora = DateTime.UtcNow;
                 bitacora.Tipo = "WARNING";
                 bitacora.Descripcion = $"Intento fallido de ingreso con usuario inexistente: \"{txtUsuario.Text}\"";
@@ -65,13 +65,13 @@ namespace UI
                 return;
             }
 
-            if (usuario.Password != Seguridad.Encriptar(txtPassword.Text))
+            if (usuario.Password != BLL_Seguridad.Encriptar(txtPassword.Text))
             {
                 MessageBox.Show("Usuario o contraseña incorrectos");
 
                 BLL_Usuario.IncrementarIntentosFallidos(usuario);
 
-                bitacora.Username = "Sin usuario";
+                bitacora.Usuario = "Sin usuario";
                 bitacora.FechaYHora = DateTime.UtcNow;
                 bitacora.Tipo = "WARNING";
                 bitacora.Descripcion = $"Intento fallido de ingreso con el usuario \"{txtUsuario.Text}\"";
@@ -81,8 +81,8 @@ namespace UI
                 return;
             }
 
-            SessionManager.Login(usuario);
-            bitacora.Username = SessionManager.GetInstance.usuario.Username;
+            BLL_SessionManager.Login(usuario);
+            bitacora.Usuario = BLL_SessionManager.GetInstance.usuario.User;
             bitacora.FechaYHora = DateTime.UtcNow;
             bitacora.Tipo = "INFO";
             bitacora.Descripcion = $"Ingreso al sistema";

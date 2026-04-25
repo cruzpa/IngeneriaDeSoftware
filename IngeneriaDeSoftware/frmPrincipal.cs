@@ -23,7 +23,7 @@ namespace UI
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             msMenu.Visible = false;
-            SessionManager.Logout();
+            BLL_SessionManager.Logout();
             ssMenu.Visible = false;
             tsslUsuario.Text = "";
             AbrirFormulario<frmLogin>(form);
@@ -53,10 +53,10 @@ namespace UI
             form = null;
             msMenu.Enabled = true;
             ssMenu.Visible = true;
-            SessionManager sesion = SessionManager.GetInstance;
+            BLL_SessionManager sesion = BLL_SessionManager.GetInstance;
             if (sesion != null)
             {
-                tsslUsuario.Text = sesion.usuario.Username;
+                tsslUsuario.Text = sesion.usuario.User;
             }
         }
 

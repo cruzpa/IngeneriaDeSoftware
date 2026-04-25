@@ -42,5 +42,22 @@ namespace BLL
         {
             u.ReiniciarIntentosFallidos(usuario);
         }
+        public static int Bloquear(BE_Usuario usuario)
+        {
+            int resultado = u.Bloquear(usuario);
+            return resultado;
+        }
+        public static bool ValidarBloqueado(BE_Usuario usuario)
+        {
+            if (usuario == null) return false;
+            if (usuario.Bloqueado) return false;
+            return true;
+        }
+        public static bool ValidarEliminado(BE_Usuario usuario)
+        {
+            if (usuario == null) return false;
+            if (!usuario.Eliminado) return false;
+            return true;
+        }
     }
 }

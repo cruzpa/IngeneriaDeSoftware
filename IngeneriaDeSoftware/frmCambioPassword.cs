@@ -22,8 +22,8 @@ namespace UI
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            BE_Usuario usuario = SessionManager.GetInstance.usuario;
-            usuario.Password = Seguridad.Encriptar(txtPassword.Text);
+            BE_Usuario usuario = BLL_SessionManager.GetInstance.usuario;
+            usuario.Password = BLL_Seguridad.Encriptar(txtPassword.Text);
             BLL_Usuario.CambiarPassword(usuario);
             this.Close();
         }

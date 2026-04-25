@@ -53,7 +53,7 @@ namespace UI
             {
                 DataRow dr = dt.NewRow();
                 dr[0] = b.Id;
-                dr[1] = b.Username;
+                dr[1] = b.Usuario;
                 dr[2] = (b.FechaYHora).ToLocalTime();
                 dr[3] = b.Tipo;
                 dr[4] = b.Descripcion;

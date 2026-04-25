@@ -10,91 +10,80 @@ namespace DAL
 {
     public class DAL_Bitacora
     {
-        public void Crear(BE_Bitacora bitacora)
+        private readonly Acceso acceso = new Acceso();
+        public int Crear(BE_Bitacora bitacora)
         {
-            Acceso acceso = new Acceso();
+            int resultado = 0;
+            if (bitacora == null) return resultado;
             acceso.Abrir();
-            ////usar sqlParameter para evitar inyeccion sql
-            //var parametros = new List<SqlParameter>();
-            //parametros.Add(acceso.CrearParametro("@username", u.Username));
-            //string queryCheck = "SELECT COUNT(1) FROM Usuario WHERE Username = @username";
-            acceso.Escribir($"insert into Bitacora (Usuario, FechaYHora, Tipo, Descripcion) values ('{bitacora.Username}', '{bitacora.FechaYHora}', '{bitacora.Tipo}', '{bitacora.Descripcion}')");
-            acceso.Cerrar();
-            //
+            try
+            {
+                List<SqlParameter> parametros = new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@Usuario", bitacora.Usuario),
+                    acceso.CrearParametro("@FechaYHora", bitacora.FechaYHora.ToString()),
+                    acceso.CrearParametro("@Tipo", bitacora.Tipo),
+                    acceso.CrearParametro("@Descripcion", bitacora.Descripcion)
+                };
+                resultado = acceso.Escribir($"insert into Bitacora (Usuario, FechaYHora, Tipo, Descripcion) values (@Usuario, @FechaYHora, @Tipo, @Descripcion)", parametros);
+            }
+            catch (Exception ex) { throw ex; }
+            finally { acceso.Cerrar(); }
+            return resultado;
         }
-
-        public List<BE_Bitacora> Buscar(string tipo, string fechaInicio)
+        public List<BE_Bitacora> Buscar(string fechaInicio, string fechaFin)
         {
-            List<BE_Bitacora> lista = new List<BE_Bitacora>();
-            Acceso acceso = new Acceso();
             acceso.Abrir();
-
-            if (tipo == "TODOS") 
+            List<BE_Bitacora> lista = new List<BE_Bitacora>();
+            try
             {
-                SqlDataReader reader = acceso.Leer($"select b.Id, b.Usuario, b.FechaYHora, b.Tipo, b.Descripcion from Bitacora b where b.FechaYHora >= '{fechaInicio}'");
+                List<SqlParameter> parametros = new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@FechaInicio", fechaInicio),
+                    acceso.CrearParametro("@FechaFin", fechaFin)
+                };
+
+                SqlDataReader reader = acceso.Leer("select Id, Usuario, FechaYHora, Tipo, Descripcion from Bitacora where FechaYHora >= @FechaInicio and FechaYHora <= @FechaFin", parametros);
                 while (reader.Read())
                 {
                     BE_Bitacora bitacora = new BE_Bitacora();
                     bitacora.Id = int.Parse(reader["Id"].ToString());
-                    bitacora.Username = reader["Usuario"].ToString();
-                    bitacora.FechaYHora = DateTime.Parse(reader["FechaYHora"].ToString());
-                    bitacora.Tipo = reader["Tipo"].ToString();
-                    bitacora.Descripcion = reader["Descripcion"].ToString();
+                    bitacora.Usuario = reader["Username"].ToString();
+                    bitacora.FechaYHora = DateTime.Parse(reader["Password"].ToString());
+                    bitacora.Tipo = reader["Nombre"].ToString();
+                    bitacora.Descripcion = reader["Apellido"].ToString();
                     lista.Add(bitacora);
                 }
             }
-            else
-            {
-                SqlDataReader reader = acceso.Leer($"select b.Id, b.Usuario, b.FechaYHora, b.Tipo, b.Descripcion from Bitacora b where b.tipo = '{tipo}' and b.FechaYHora >= '{fechaInicio}'");
-                while (reader.Read())
-                {
-                    BE_Bitacora bitacora = new BE_Bitacora();
-                    bitacora.Id = int.Parse(reader["Id"].ToString());
-                    bitacora.Username = reader["Usuario"].ToString();
-                    bitacora.FechaYHora = DateTime.Parse(reader["FechaYHora"].ToString());
-                    bitacora.Tipo = reader["Tipo"].ToString();
-                    bitacora.Descripcion = reader["Descripcion"].ToString();
-                    lista.Add(bitacora);
-                }
-            }
-
-            acceso.Cerrar();
+            catch (Exception ex) { throw ex; }
+            finally { acceso.Cerrar(); }
             return lista;
         }
         public List<BE_Bitacora> Buscar(string tipo, string fechaInicio, string fechaFin)
         {
-            List<BE_Bitacora> lista = new List<BE_Bitacora>();
-            Acceso acceso = new Acceso();
             acceso.Abrir();
-            if (tipo == "TODOS")
+            List<BE_Bitacora> lista = new List<BE_Bitacora>();
+            try
             {
-                SqlDataReader reader = acceso.Leer($"select b.Id, b.Usuario, b.FechaYHora, b.Tipo, b.Descripcion from Bitacora b where b.FechaYHora >= '{fechaInicio}' and b.FechaYHora <= '{fechaFin}'");
+                List<SqlParameter> parametros = new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@FechaInicio", fechaInicio),
+                    acceso.CrearParametro("@FechaFin", fechaFin)
+                };
+                SqlDataReader reader = acceso.Leer("select Id, Usuario, FechaYHora, Tipo, Descripcion from Bitacora where FechaYHora >= @FechaInicio and FechaYHora <= @FechaFin and Tipo = @Tipo", parametros);
                 while (reader.Read())
                 {
                     BE_Bitacora bitacora = new BE_Bitacora();
                     bitacora.Id = int.Parse(reader["Id"].ToString());
-                    bitacora.Username = reader["Usuario"].ToString();
-                    bitacora.FechaYHora = DateTime.Parse(reader["FechaYHora"].ToString());
-                    bitacora.Tipo = reader["Tipo"].ToString();
-                    bitacora.Descripcion = reader["Descripcion"].ToString();
+                    bitacora.Usuario = reader["Username"].ToString();
+                    bitacora.FechaYHora = DateTime.Parse(reader["Password"].ToString());
+                    bitacora.Tipo = reader["Nombre"].ToString();
+                    bitacora.Descripcion = reader["Apellido"].ToString();
                     lista.Add(bitacora);
                 }
             }
-            else
-            {
-                SqlDataReader reader = acceso.Leer($"select b.Id, b.Usuario, b.FechaYHora, b.Tipo, b.Descripcion from Bitacora b where b.tipo = '{tipo}' and b.FechaYHora >= '{fechaInicio}' and b.FechaYHora <= '{fechaFin}'");
-                while (reader.Read())
-                {
-                    BE_Bitacora bitacora = new BE_Bitacora();
-                    bitacora.Id = int.Parse(reader["Id"].ToString());
-                    bitacora.Username = reader["Usuario"].ToString();
-                    bitacora.FechaYHora = DateTime.Parse(reader["FechaYHora"].ToString());
-                    bitacora.Tipo = reader["Tipo"].ToString();
-                    bitacora.Descripcion = reader["Descripcion"].ToString();
-                    lista.Add(bitacora);
-                }
-            }
-            acceso.Cerrar();
+            catch (Exception ex) { throw ex; }
+            finally { acceso.Cerrar(); }
             return lista;
         }
     }

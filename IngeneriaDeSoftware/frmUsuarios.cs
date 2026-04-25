@@ -39,27 +39,37 @@ namespace UI
         private void ActualizarGrillaUsuarios()
         {
             DataTable dt = new DataTable();
-            dt.Columns.Add("Usuario");
+            dt.Columns.Add("Id");
+            dt.Columns.Add("Username");
             dt.Columns.Add("Password");
-            dt.Columns.Add("Eliminado");
+            dt.Columns.Add("Nombre");
+            dt.Columns.Add("Apellido");
+            dt.Columns.Add("Email");
+            dt.Columns.Add("Telefono");
             dt.Columns.Add("Intentos Fallidos");
             dt.Columns.Add("Bloqueado");
+            dt.Columns.Add("Eliminado");
             if (usuarios == null) return;
             foreach (BE_Usuario u in usuarios)
             {
                 DataRow dr = dt.NewRow();
-                dr[0] = u.Username;
-                dr[1] = u.Password;
-                dr[2] = u.Eliminado;
-                dr[3] = u.IntentosFallidos;
-                dr[4] = u.Bloqueado;
+                dr[0] = u.Id;
+                dr[1] = u.User;
+                dr[2] = u.Password;
+                dr[3] = u.Nombre;
+                dr[4] = u.Apellido;
+                dr[5] = u.Email;
+                dr[6] = u.Telefono;
+                dr[7] = u.IntentosFallidos;
+                dr[8] = u.Bloqueado;
+                dr[9] = u.Eliminado;
                 dt.Rows.Add(dr);
             }
             dgvUsuarios.DataSource = dt;
             
-            if (bool.Parse(dgvUsuarios.Rows[0].Cells[2].Value.ToString())) btnBorrar.Text = "Habilitar"; //Fuerza la actualización del botón borrar
+            if (bool.Parse(dgvUsuarios.Rows[0].Cells[9].Value.ToString())) btnBorrar.Text = "Habilitar"; //Fuerza la actualización del botón borrar
             else btnBorrar.Text = "Borrar";
-            if (bool.Parse(dgvUsuarios.Rows[0].Cells[4].Value.ToString())) btnDesbloquear.Enabled = true; //Fuerza la actualización del botón desbloquear
+            if (bool.Parse(dgvUsuarios.Rows[0].Cells[8].Value.ToString())) btnDesbloquear.Enabled = true; //Fuerza la actualización del botón desbloquear
         }
 
         private void dgvUsuarios_CellEnter(object sender, DataGridViewCellEventArgs e)
@@ -68,12 +78,16 @@ namespace UI
             {
                 if (dgvUsuarios.SelectedRows.Count > 0) 
                 {
-                    txtUsuario.Text = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+                    txtUsername.Text = dgvUsuarios.SelectedRows[0].Cells["Username"].Value.ToString();
+                    txtNombre.Text = dgvUsuarios.SelectedRows[0].Cells["Nombre"].Value.ToString();
+                    txtApellido.Text = dgvUsuarios.SelectedRows[0].Cells["Apellido"].Value.ToString();
+                    txtEmail.Text = dgvUsuarios.SelectedRows[0].Cells["Email"].Value.ToString();
+                    txtTelefono.Text = dgvUsuarios.SelectedRows[0].Cells["Telefono"].Value.ToString();
                     
-                    if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells[2].Value.ToString())) btnBorrar.Text = "Habilitar";
+                    if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells["Eliminado"].Value.ToString())) btnBorrar.Text = "Habilitar";
                     else btnBorrar.Text = "Borrar";
                     
-                    if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells[4].Value.ToString())) btnDesbloquear.Enabled = true;
+                    if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells["Bloqueado"].Value.ToString())) btnDesbloquear.Enabled = true;
                     else btnDesbloquear.Enabled = false;
 
                 }
@@ -89,8 +103,8 @@ namespace UI
             try
             {
                 BE_Usuario usuario = new BE_Usuario();
-                usuario.Username = txtUsuario.Text;
-                usuario.Password = Seguridad.Encriptar("cambiar");
+                usuario.User = txtUsername.Text;
+                usuario.Password = BLL_Seguridad.Encriptar("cambiar");
                 BLL_Usuario.Crear(usuario);
                 CargarListaUsuarios(true);
                 ActualizarGrillaUsuarios();
@@ -107,7 +121,7 @@ namespace UI
             {
                 if (dgvUsuarios.SelectedRows.Count <= 0) return;
                 BE_Usuario usuario = new BE_Usuario();
-                usuario.Username = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+                usuario.User = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
                 
                 if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells[2].Value.ToString())) //Si eliminado = true
                 {
@@ -135,8 +149,8 @@ namespace UI
                 if (dgvUsuarios.SelectedRows.Count > 0)
                 {
                     BE_Usuario usuario = new BE_Usuario();
-                    usuario.Username = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
-                    usuario.Password = Seguridad.Encriptar("cambiar");
+                    usuario.User = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+                    usuario.Password = BLL_Seguridad.Encriptar("cambiar");
                     BLL_Usuario.CambiarPassword(usuario);
 
                     CargarListaUsuarios(true);
@@ -156,7 +170,7 @@ namespace UI
             {
                 if (dgvUsuarios.SelectedRows.Count <= 0) return;
                 BE_Usuario usuario = new BE_Usuario();
-                usuario.Username = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+                usuario.User = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
 
                 if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells[4].Value.ToString())) //Si bloqueado = true
                 {

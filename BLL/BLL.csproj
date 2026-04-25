@@ -44,8 +44,8 @@
     <Compile Include="BLL_Bitacora.cs" />
     <Compile Include="BLL_Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Seguridad.cs" />
-    <Compile Include="SessionManager.cs" />
+    <Compile Include="BLL_Seguridad.cs" />
+    <Compile Include="BLL_SessionManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BE\BE.csproj">

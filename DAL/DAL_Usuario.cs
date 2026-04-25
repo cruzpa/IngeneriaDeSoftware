@@ -11,106 +11,249 @@ namespace DAL
     public class DAL_Usuario
     {
         private readonly Acceso acceso = new Acceso();
-        //usar sqlParameter para evitar inyeccion sql
-        public void Crear(BE_Usuario usuario)
+        public int Crear(BE_Usuario usuario)
         {
+            int resultado = 0;
+            if (usuario == null) return resultado;
             acceso.Abrir();
-            acceso.Escribir($"insert into usuario (Usuario, Password, Eliminado, IntentosFallidos, Bloqueado) values ('{usuario.Username}', '{usuario.Password}', '{usuario.Eliminado}', 0, 0)");
-            acceso.Cerrar();
+            try
+            {
+                List<SqlParameter> parametros = new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@User", usuario.User),
+                    acceso.CrearParametro("@Password", usuario.Password),
+                    acceso.CrearParametro("@Nombre", usuario.Nombre),
+                    acceso.CrearParametro("@Apellido", usuario.Apellido),
+                    acceso.CrearParametro("@Email", usuario.Email),
+                    acceso.CrearParametro("@Telefono", usuario.Telefono)
+                };
+                resultado = acceso.Escribir($"insert into Usuario (User, Password, Nombre, Apellido, Email, Telefono, IntentosFaillidos, Bloqueado, Eliminado) values (@User, @Password, @Nombre, @Apellido, @Email, @Telefono, 0,0,0)", parametros);
+            }
+            catch (Exception ex) { throw ex; }
+            finally { acceso.Cerrar(); }
+            return resultado;
         }
 
-        public void CambiarPassword(BE_Usuario usuario)
+        public int CambiarPassword(BE_Usuario usuario)
         {
+            int resultado = 0;
+            if (usuario == null) return resultado;
             acceso.Abrir();
-            acceso.Escribir($"update Usuario set Usuario.Password = '{usuario.Password}' where Usuario.Usuario = '{usuario.Username}'");
-            acceso.Cerrar();
+            try
+            {
+                List<SqlParameter> parametros = new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@Id", usuario.Id),
+                    acceso.CrearParametro("@Password", usuario.Password)
+                };
+                resultado = acceso.Escribir($"update Usuario set Usuario.Password = @Password where Usuario.Usuario = @Id", parametros);
+            }
+            catch (Exception ex) { throw ex; }
+            finally { acceso.Cerrar(); }
+            return resultado;
         }
         public BE_Usuario BuscarPorUsuario(string user)
         {
-            BE_Usuario usuario = new BE_Usuario();
+            if (user == string.Empty) return null;
             acceso.Abrir();
-            SqlDataReader reader = acceso.Leer($"select u.Usuario, u.Password, u.Eliminado, u.IntentosFallidos, u.Bloqueado from Usuario u where u.Usuario = '{user}' and u.Eliminado = 0");
-            while (reader.Read())
+            BE_Usuario usuario = new BE_Usuario();
+            try
             {
-                usuario.Username = reader["Usuario"].ToString();
-                usuario.Password = reader["Password"].ToString();
-                usuario.Eliminado = bool.Parse(reader["Eliminado"].ToString());
-                usuario.IntentosFallidos = int.Parse(reader["IntentosFallidos"].ToString());
-                usuario.Bloqueado = bool.Parse(reader["Bloqueado"].ToString());
+                List<SqlParameter> parametros = new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@User", user)
+                };
+                SqlDataReader reader = acceso.Leer("select Usuario.Id, Usuario.User, Usuario.Password, Usuario.Nombre, Usuario.Apellido, Usuario.Email, Usuario.Telefono, Usuario.IntentosFallidos, Usuario.BLoqueado, Usuario.Eliminado from Usuario where Usuario.User = @User", parametros);
+                while (reader.Read())
+                {
+                    usuario.Id = int.Parse(reader["Id"].ToString());
+                    usuario.User = reader["Username"].ToString();
+                    usuario.Password = reader["Password"].ToString();
+                    usuario.Nombre = reader["Nombre"].ToString();
+                    usuario.Apellido = reader["Apellido"].ToString();
+                    usuario.Email = reader["Email"].ToString();
+                    usuario.Telefono = reader["Telefono"].ToString();
+                    usuario.IntentosFallidos = int.Parse(reader["IntentosFallidos"].ToString());
+                    usuario.Bloqueado = bool.Parse(reader["Bloqueado"].ToString());
+                    usuario.Eliminado = bool.Parse(reader["Eliminado"].ToString());
+                }
             }
-            acceso.Cerrar();
+            catch (Exception ex) { throw ex; }
+            finally { acceso.Cerrar(); }
             return usuario;
         }
         public List<BE_Usuario> BuscarUsuarios(bool incluireliminados)
         {
-            List<BE_Usuario> usuarios = new List<BE_Usuario>();
             acceso.Abrir();
-            if (incluireliminados)
+            List<BE_Usuario> usuarios = new List<BE_Usuario>();
+            try
             {
-                SqlDataReader reader = acceso.Leer($"select u.Usuario, u.Password, u.Eliminado, u.IntentosFallidos, u.Bloqueado from Usuario u");
+                SqlDataReader reader;
+                if (incluireliminados) reader = acceso.Leer("select Usuario.Id, Usuario.User, Usuario.Password, Usuario.Nombre, Usuario.Apellido, Usuario.Email, Usuario.Telefono, Usuario.IntentosFallidos, Usuario.BLoqueado, Usuario.Eliminado from Usuario");
+                else reader = acceso.Leer("select Usuario.Id, Usuario.User, Usuario.Password, Usuario.Nombre, Usuario.Apellido, Usuario.Email, Usuario.Telefono, Usuario.IntentosFallidos, Usuario.BLoqueado, Usuario.Eliminado from Usuario where Usuario.Eliminado = 'false'");
                 while (reader.Read())
                 {
                     BE_Usuario usuario = new BE_Usuario();
-                    usuario.Username = reader["Usuario"].ToString();
+                    usuario.Id = int.Parse(reader["Id"].ToString());
+                    usuario.User = reader["Username"].ToString();
                     usuario.Password = reader["Password"].ToString();
-                    usuario.Eliminado = bool.Parse(reader["Eliminado"].ToString());
+                    usuario.Nombre = reader["Nombre"].ToString();
+                    usuario.Apellido = reader["Apellido"].ToString();
+                    usuario.Email = reader["Email"].ToString();
+                    usuario.Telefono = reader["Telefono"].ToString();
                     usuario.IntentosFallidos = int.Parse(reader["IntentosFallidos"].ToString());
                     usuario.Bloqueado = bool.Parse(reader["Bloqueado"].ToString());
+                    usuario.Eliminado = bool.Parse(reader["Eliminado"].ToString());
                     usuarios.Add(usuario);
                 }
             }
-            else
-            {
-                SqlDataReader reader = acceso.Leer($"select u.Usuario, u.Password, u.Eliminado from Usuario u where u.Eliminado = 0");
-                while (reader.Read())
-                {
-                    BE_Usuario usuario = new BE_Usuario();
-                    usuario.Username = reader["Usuario"].ToString();
-                    usuario.Password = reader["Password"].ToString();
-                    usuario.Eliminado = bool.Parse(reader["Eliminado"].ToString());
-                    usuario.IntentosFallidos = int.Parse(reader["IntentosFallidos"].ToString());
-                    usuario.Bloqueado = bool.Parse(reader["Bloqueado"].ToString());
-                    usuarios.Add(usuario);
-                }
-            }
-            acceso.Cerrar();
+            catch (Exception ex) { throw ex; }
+            finally { acceso.Cerrar(); }
             return usuarios;
         }
-        public void Modificar(BE_Usuario usuario)
+        public int ModificarUser(BE_Usuario usuario)
         {
+            int resultado = 0;
+            if (usuario == null) return resultado;
             acceso.Abrir();
-            //mover logica a BLL para que no haya logica de negocio en DAL y agregar funciones Desbloquear, Bloquear, Eliminar, Restaurar
-            if (usuario.Eliminado && usuario.Bloqueado) acceso.Escribir($"update Usuario set Usuario.Eliminado = 1, Usuario.Bloqueado = 1 where Usuario.Usuario = '{usuario.Username}'");
-            else if (usuario.Eliminado && !usuario.Bloqueado) acceso.Escribir($"update Usuario set Usuario.Eliminado = 1, Usuario.Bloqueado = 0 where Usuario.Usuario = '{usuario.Username}'");
-            else if (!usuario.Eliminado && usuario.Bloqueado) acceso.Escribir($"update Usuario set Usuario.Eliminado = 0, Usuario.Bloqueado = 1 where Usuario.Usuario = '{usuario.Username}'");
-            else if (!usuario.Eliminado && !usuario.Bloqueado) acceso.Escribir($"update Usuario set Usuario.Eliminado = 0, Usuario.Bloqueado = 0 where Usuario.Usuario = '{usuario.Username}'");
-            acceso.Cerrar();
+            try
+            {
+                List<SqlParameter> parametros = new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@Id", usuario.Id),
+                    acceso.CrearParametro("@User", usuario.User)
+                };
+                resultado = acceso.Escribir($"update Usuario set Usuario.User = @User where Usuario.Usuario = @Id", parametros);
+            }
+            catch (Exception ex) { throw ex; }
+            finally { acceso.Cerrar(); }
+            return resultado;
+        }
+        public int Modificar(BE_Usuario usuario)
+        {
+            int resultado = 0;
+            if (usuario == null) return resultado;
+            acceso.Abrir();
+            try
+            {
+                List<SqlParameter> parametros = new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@Id", usuario.Id),
+                    acceso.CrearParametro("@Nombre", usuario.Id),
+                    acceso.CrearParametro("@Apellido", usuario.Id),
+                    acceso.CrearParametro("@Email", usuario.Id),
+                    acceso.CrearParametro("@Telefono", usuario.Id)
+                };
+                resultado = acceso.Escribir($"update Usuario set Usuario.Nombre = @Nombre, Usuario.Apellido = @Apellido, Usuario.Email = @Email, Usuario.Telefono = @Telefono where Usuario.Usuario = @Id", parametros);
+            }
+            catch (Exception ex) { throw ex; }
+            finally { acceso.Cerrar(); }
+            return resultado;
         }
 
-        public void IncrementarIntentosFallidos(BE_Usuario usuario)
+        public int IncrementarIntentosFallidos(BE_Usuario usuario)
         {
-            //mover logica a BLL para que no haya logica de negocio en DAL
-            if (usuario.IntentosFallidos > 4)
+            int resultado = 0;
+            if (usuario == null) return resultado;
+            acceso.Abrir();
+            try
             {
-                usuario.Bloqueado = true;
-                Modificar(usuario);
+                List<SqlParameter> parametros = new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@Id", usuario.Id),
+                    acceso.CrearParametro("@IntentosFallidos", usuario.IntentosFallidos)
+                };
+                resultado = acceso.Escribir($"update Usuario set Usuario.IntentosFallidos = @IntentosFallidos where Usuario.Usuario = @Id", parametros);
             }
-            else
-            {
-                usuario.IntentosFallidos++;
-                Acceso acceso = new Acceso();
-                acceso.Abrir();
-                acceso.Escribir($"update Usuario set Usuario.IntentosFallidos = {usuario.IntentosFallidos} where Usuario.Usuario = '{usuario.Username}'");
-                acceso.Cerrar();
-            }
+            catch (Exception ex) { throw ex; }
+            finally { acceso.Cerrar(); }
+            return resultado;
         }
 
-        public void ReiniciarIntentosFallidos(BE_Usuario usuario)
+        public int ReiniciarIntentosFallidos(BE_Usuario usuario)
         {
-            Acceso acceso= new Acceso();
+            int resultado = 0;
+            if (usuario == null) return resultado;
             acceso.Abrir();
-            acceso.Escribir($"update Usuario set Usuario.IntentosFallidos = {usuario.IntentosFallidos} where Usuario.Usuario = '{usuario.Username}'");
-            acceso.Cerrar();
+            try
+            {
+                List<SqlParameter> parametros = new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@Id", usuario.Id)
+                };
+                resultado = acceso.Escribir($"update Usuario set Usuario.IntentosFallidos = 0 where Usuario.Usuario = @Id", parametros);
+            }
+            catch (Exception ex) { throw ex; }
+            finally { acceso.Cerrar(); }
+            return resultado;
+        }
+        public int Bloquear(BE_Usuario usuario)
+        {
+            int resultado = 0;
+            if (usuario == null) return resultado;
+            acceso.Abrir();
+            try
+            {
+                List<SqlParameter> parametros = new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@Id", usuario.Id)
+                };
+                resultado = acceso.Escribir($"update Usuario set Usuario.Bloqueado = ture where Usuario.Usuario = @Id", parametros);
+            }
+            catch (Exception ex) { throw ex; }
+            finally { acceso.Cerrar(); }
+            return resultado;
+        }
+        public int Desbloquear(BE_Usuario usuario)
+        {
+            int resultado = 0;
+            if (usuario == null) return resultado;
+            acceso.Abrir();
+            try
+            {
+                List<SqlParameter> parametros = new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@Id", usuario.Id)
+                };
+                resultado = acceso.Escribir($"update Usuario set Usuario.Bloqueado = false where Usuario.Usuario = @Id", parametros);
+            }
+            catch (Exception ex) { throw ex; }
+            finally { acceso.Cerrar(); }
+            return resultado;
+        }
+        public int Eliminar(BE_Usuario usuario)
+        {
+            int resultado = 0;
+            if (usuario == null) return resultado;
+            acceso.Abrir();
+            try
+            {
+                List<SqlParameter> parametros = new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@Id", usuario.Id)
+                };
+                resultado = acceso.Escribir($"update Usuario set Usuario.Eliminado = true where Usuario.Usuario = @Id", parametros);
+            }
+            catch (Exception ex) { throw ex; }
+            finally { acceso.Cerrar(); }
+            return resultado;
+        }
+        public int Habilitar(BE_Usuario usuario)
+        {
+            int resultado = 0;
+            if (usuario == null) return resultado;
+            acceso.Abrir();
+            try
+            {
+                List<SqlParameter> parametros = new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@Id", usuario.Id)
+                };
+                resultado = acceso.Escribir($"update Usuario set Usuario.Eliminado = false where Usuario.Usuario = @Id", parametros);
+            }
+            catch (Exception ex) { throw ex; }
+            finally { acceso.Cerrar(); }
+            return resultado;
         }
     }
 }

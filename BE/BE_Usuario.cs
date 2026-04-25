@@ -9,7 +9,7 @@ namespace BE
     public class BE_Usuario
     {
         public int Id { get; set; }
-        public string Username { get; set; } 
+        public string User { get; set; } 
         public string Password { get; set; }
         public bool Eliminado { get; set; }
         public int IntentosFallidos { get; set; }
