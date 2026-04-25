@@ -3,5 +3,4 @@
   <Project Path="BLL/BLL.csproj" Id="3af711ed-9f6b-4474-8757-2260c1822370" />
   <Project Path="DAL/DAL.csproj" Id="115c9174-1425-4762-8c76-7b885997ad15" />
   <Project Path="IngeneriaDeSoftware/UI.csproj" Id="87bb15c1-8f42-44d6-991b-3ca886728e4f" />
-  <Project Path="Servicios/Servicios.csproj" Id="e344d47d-3b64-4abd-b23a-e4431faee8af" />
 </Solution>

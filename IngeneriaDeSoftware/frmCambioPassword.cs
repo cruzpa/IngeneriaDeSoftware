@@ -22,10 +22,9 @@ namespace UI
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            BLL_Usuario u = new BLL_Usuario();
             BE_Usuario usuario = SessionManager.GetInstance.usuario;
             usuario.Password = Seguridad.Encriptar(txtPassword.Text);
-            u.CambiarPassword(usuario);
+            BLL_Usuario.CambiarPassword(usuario);
             this.Close();
         }
     }

@@ -10,33 +10,29 @@ namespace DAL
 {
     public class DAL_Usuario
     {
-        //Acceso acceso = new Acceso();
-        //sacarlo de los metodos 
+        private readonly Acceso acceso = new Acceso();
         //usar sqlParameter para evitar inyeccion sql
         public void Crear(BE_Usuario usuario)
         {
-            Acceso acceso = new Acceso();
             acceso.Abrir();
-            acceso.Escribir($"insert into usuario (Usuario, Password, Eliminado, IntentosFallidos, Bloqueado) values ('{usuario.Usuario}', '{usuario.Password}', '{usuario.Eliminado}', 0, 0)");
+            acceso.Escribir($"insert into usuario (Usuario, Password, Eliminado, IntentosFallidos, Bloqueado) values ('{usuario.Username}', '{usuario.Password}', '{usuario.Eliminado}', 0, 0)");
             acceso.Cerrar();
         }
 
         public void CambiarPassword(BE_Usuario usuario)
         {
-            Acceso acceso = new Acceso();
             acceso.Abrir();
-            acceso.Escribir($"update Usuario set Usuario.Password = '{usuario.Password}' where Usuario.Usuario = '{usuario.Usuario}'");
+            acceso.Escribir($"update Usuario set Usuario.Password = '{usuario.Password}' where Usuario.Usuario = '{usuario.Username}'");
             acceso.Cerrar();
         }
         public BE_Usuario BuscarPorUsuario(string user)
         {
             BE_Usuario usuario = new BE_Usuario();
-            Acceso acceso = new Acceso();
             acceso.Abrir();
             SqlDataReader reader = acceso.Leer($"select u.Usuario, u.Password, u.Eliminado, u.IntentosFallidos, u.Bloqueado from Usuario u where u.Usuario = '{user}' and u.Eliminado = 0");
             while (reader.Read())
             {
-                usuario.Usuario = reader["Usuario"].ToString();
+                usuario.Username = reader["Usuario"].ToString();
                 usuario.Password = reader["Password"].ToString();
                 usuario.Eliminado = bool.Parse(reader["Eliminado"].ToString());
                 usuario.IntentosFallidos = int.Parse(reader["IntentosFallidos"].ToString());
@@ -48,7 +44,6 @@ namespace DAL
         public List<BE_Usuario> BuscarUsuarios(bool incluireliminados)
         {
             List<BE_Usuario> usuarios = new List<BE_Usuario>();
-            Acceso acceso = new Acceso();
             acceso.Abrir();
             if (incluireliminados)
             {
@@ -56,7 +51,7 @@ namespace DAL
                 while (reader.Read())
                 {
                     BE_Usuario usuario = new BE_Usuario();
-                    usuario.Usuario = reader["Usuario"].ToString();
+                    usuario.Username = reader["Usuario"].ToString();
                     usuario.Password = reader["Password"].ToString();
                     usuario.Eliminado = bool.Parse(reader["Eliminado"].ToString());
                     usuario.IntentosFallidos = int.Parse(reader["IntentosFallidos"].ToString());
@@ -70,7 +65,7 @@ namespace DAL
                 while (reader.Read())
                 {
                     BE_Usuario usuario = new BE_Usuario();
-                    usuario.Usuario = reader["Usuario"].ToString();
+                    usuario.Username = reader["Usuario"].ToString();
                     usuario.Password = reader["Password"].ToString();
                     usuario.Eliminado = bool.Parse(reader["Eliminado"].ToString());
                     usuario.IntentosFallidos = int.Parse(reader["IntentosFallidos"].ToString());
@@ -83,13 +78,12 @@ namespace DAL
         }
         public void Modificar(BE_Usuario usuario)
         {
-            Acceso acceso = new Acceso();
             acceso.Abrir();
             //mover logica a BLL para que no haya logica de negocio en DAL y agregar funciones Desbloquear, Bloquear, Eliminar, Restaurar
-            if (usuario.Eliminado && usuario.Bloqueado) acceso.Escribir($"update Usuario set Usuario.Eliminado = 1, Usuario.Bloqueado = 1 where Usuario.Usuario = '{usuario.Usuario}'");
-            else if (usuario.Eliminado && !usuario.Bloqueado) acceso.Escribir($"update Usuario set Usuario.Eliminado = 1, Usuario.Bloqueado = 0 where Usuario.Usuario = '{usuario.Usuario}'");
-            else if (!usuario.Eliminado && usuario.Bloqueado) acceso.Escribir($"update Usuario set Usuario.Eliminado = 0, Usuario.Bloqueado = 1 where Usuario.Usuario = '{usuario.Usuario}'");
-            else if (!usuario.Eliminado && !usuario.Bloqueado) acceso.Escribir($"update Usuario set Usuario.Eliminado = 0, Usuario.Bloqueado = 0 where Usuario.Usuario = '{usuario.Usuario}'");
+            if (usuario.Eliminado && usuario.Bloqueado) acceso.Escribir($"update Usuario set Usuario.Eliminado = 1, Usuario.Bloqueado = 1 where Usuario.Usuario = '{usuario.Username}'");
+            else if (usuario.Eliminado && !usuario.Bloqueado) acceso.Escribir($"update Usuario set Usuario.Eliminado = 1, Usuario.Bloqueado = 0 where Usuario.Usuario = '{usuario.Username}'");
+            else if (!usuario.Eliminado && usuario.Bloqueado) acceso.Escribir($"update Usuario set Usuario.Eliminado = 0, Usuario.Bloqueado = 1 where Usuario.Usuario = '{usuario.Username}'");
+            else if (!usuario.Eliminado && !usuario.Bloqueado) acceso.Escribir($"update Usuario set Usuario.Eliminado = 0, Usuario.Bloqueado = 0 where Usuario.Usuario = '{usuario.Username}'");
             acceso.Cerrar();
         }
 
@@ -106,7 +100,7 @@ namespace DAL
                 usuario.IntentosFallidos++;
                 Acceso acceso = new Acceso();
                 acceso.Abrir();
-                acceso.Escribir($"update Usuario set Usuario.IntentosFallidos = {usuario.IntentosFallidos} where Usuario.Usuario = '{usuario.Usuario}'");
+                acceso.Escribir($"update Usuario set Usuario.IntentosFallidos = {usuario.IntentosFallidos} where Usuario.Usuario = '{usuario.Username}'");
                 acceso.Cerrar();
             }
         }
@@ -115,7 +109,7 @@ namespace DAL
         {
             Acceso acceso= new Acceso();
             acceso.Abrir();
-            acceso.Escribir($"update Usuario set Usuario.IntentosFallidos = {usuario.IntentosFallidos} where Usuario.Usuario = '{usuario.Usuario}'");
+            acceso.Escribir($"update Usuario set Usuario.IntentosFallidos = {usuario.IntentosFallidos} where Usuario.Usuario = '{usuario.Username}'");
             acceso.Cerrar();
         }
     }

@@ -18,7 +18,7 @@ namespace DAL
             //var parametros = new List<SqlParameter>();
             //parametros.Add(acceso.CrearParametro("@username", u.Username));
             //string queryCheck = "SELECT COUNT(1) FROM Usuario WHERE Username = @username";
-            acceso.Escribir($"insert into Bitacora (Usuario, FechaYHora, Tipo, Descripcion) values ('{bitacora.Usuario}', '{bitacora.FechaYHora}', '{bitacora.Tipo}', '{bitacora.Descripcion}')");
+            acceso.Escribir($"insert into Bitacora (Usuario, FechaYHora, Tipo, Descripcion) values ('{bitacora.Username}', '{bitacora.FechaYHora}', '{bitacora.Tipo}', '{bitacora.Descripcion}')");
             acceso.Cerrar();
             //
         }
@@ -36,8 +36,8 @@ namespace DAL
                 {
                     BE_Bitacora bitacora = new BE_Bitacora();
                     bitacora.Id = int.Parse(reader["Id"].ToString());
-                    bitacora.Usuario = reader["Usuario"].ToString();
-                    bitacora.FechaYHora = reader["FechaYHora"].ToString();
+                    bitacora.Username = reader["Usuario"].ToString();
+                    bitacora.FechaYHora = DateTime.Parse(reader["FechaYHora"].ToString());
                     bitacora.Tipo = reader["Tipo"].ToString();
                     bitacora.Descripcion = reader["Descripcion"].ToString();
                     lista.Add(bitacora);
@@ -50,8 +50,8 @@ namespace DAL
                 {
                     BE_Bitacora bitacora = new BE_Bitacora();
                     bitacora.Id = int.Parse(reader["Id"].ToString());
-                    bitacora.Usuario = reader["Usuario"].ToString();
-                    bitacora.FechaYHora = reader["FechaYHora"].ToString();
+                    bitacora.Username = reader["Usuario"].ToString();
+                    bitacora.FechaYHora = DateTime.Parse(reader["FechaYHora"].ToString());
                     bitacora.Tipo = reader["Tipo"].ToString();
                     bitacora.Descripcion = reader["Descripcion"].ToString();
                     lista.Add(bitacora);
@@ -73,8 +73,8 @@ namespace DAL
                 {
                     BE_Bitacora bitacora = new BE_Bitacora();
                     bitacora.Id = int.Parse(reader["Id"].ToString());
-                    bitacora.Usuario = reader["Usuario"].ToString();
-                    bitacora.FechaYHora = reader["FechaYHora"].ToString();
+                    bitacora.Username = reader["Usuario"].ToString();
+                    bitacora.FechaYHora = DateTime.Parse(reader["FechaYHora"].ToString());
                     bitacora.Tipo = reader["Tipo"].ToString();
                     bitacora.Descripcion = reader["Descripcion"].ToString();
                     lista.Add(bitacora);
@@ -87,8 +87,8 @@ namespace DAL
                 {
                     BE_Bitacora bitacora = new BE_Bitacora();
                     bitacora.Id = int.Parse(reader["Id"].ToString());
-                    bitacora.Usuario = reader["Usuario"].ToString();
-                    bitacora.FechaYHora = reader["FechaYHora"].ToString();
+                    bitacora.Username = reader["Usuario"].ToString();
+                    bitacora.FechaYHora = DateTime.Parse(reader["FechaYHora"].ToString());
                     bitacora.Tipo = reader["Tipo"].ToString();
                     bitacora.Descripcion = reader["Descripcion"].ToString();
                     lista.Add(bitacora);

@@ -36,10 +36,9 @@ namespace UI
 
         private void CargarLista()
         {
-            BLL_Bitacora bitacora = new BLL_Bitacora();
             DateTime desde = dtpDesde.Value.ToUniversalTime().Date;
             DateTime hasta = dtpHasta.Value.AddDays(1).ToUniversalTime().Date;//Sumo un día, porque en la DB cuenta las horas, de esta forma toma hasta el día ingresado a las 23:59:59
-            lista = bitacora.Buscar(cmbTipo.Text, desde.ToString(), hasta.ToString());
+            lista = BLL_Bitacora.Buscar(cmbTipo.Text, desde.ToString(), hasta.ToString());
         }
         private void ActualizarGrilla()
         {
@@ -54,8 +53,8 @@ namespace UI
             {
                 DataRow dr = dt.NewRow();
                 dr[0] = b.Id;
-                dr[1] = b.Usuario;
-                dr[2] = DateTime.Parse(b.FechaYHora).ToLocalTime();
+                dr[1] = b.Username;
+                dr[2] = (b.FechaYHora).ToLocalTime();
                 dr[3] = b.Tipo;
                 dr[4] = b.Descripcion;
                 dt.Rows.Add(dr);

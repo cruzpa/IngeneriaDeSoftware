@@ -33,9 +33,9 @@
             this.administrarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usuariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ssMenu = new System.Windows.Forms.StatusStrip();
             this.tsslUsuario = new System.Windows.Forms.ToolStripStatusLabel();
-            this.bitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.msMenu.SuspendLayout();
             this.ssMenu.SuspendLayout();
             this.SuspendLayout();
@@ -65,7 +65,7 @@
             this.administrarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.usuariosToolStripMenuItem});
             this.administrarToolStripMenuItem.Name = "administrarToolStripMenuItem";
-            this.administrarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.administrarToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.administrarToolStripMenuItem.Text = "Administrar";
             // 
             // usuariosToolStripMenuItem
@@ -78,9 +78,16 @@
             // salirToolStripMenuItem
             // 
             this.salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-            this.salirToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.salirToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.salirToolStripMenuItem.Text = "Salir";
             this.salirToolStripMenuItem.Click += new System.EventHandler(this.salirToolStripMenuItem_Click);
+            // 
+            // bitToolStripMenuItem
+            // 
+            this.bitToolStripMenuItem.Name = "bitToolStripMenuItem";
+            this.bitToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+            this.bitToolStripMenuItem.Text = "Bitacora";
+            this.bitToolStripMenuItem.Click += new System.EventHandler(this.bitToolStripMenuItem_Click);
             // 
             // ssMenu
             // 
@@ -97,13 +104,6 @@
             this.tsslUsuario.Name = "tsslUsuario";
             this.tsslUsuario.Size = new System.Drawing.Size(118, 17);
             this.tsslUsuario.Text = "toolStripStatusLabel1";
-            // 
-            // bitToolStripMenuItem
-            // 
-            this.bitToolStripMenuItem.Name = "bitToolStripMenuItem";
-            this.bitToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
-            this.bitToolStripMenuItem.Text = "Bitacora";
-            this.bitToolStripMenuItem.Click += new System.EventHandler(this.bitToolStripMenuItem_Click);
             // 
             // frmPrincipal
             // 

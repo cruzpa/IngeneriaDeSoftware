@@ -56,7 +56,7 @@ namespace UI
             SessionManager sesion = SessionManager.GetInstance;
             if (sesion != null)
             {
-                tsslUsuario.Text = sesion.usuario.Usuario;
+                tsslUsuario.Text = sesion.usuario.Username;
             }
         }
 

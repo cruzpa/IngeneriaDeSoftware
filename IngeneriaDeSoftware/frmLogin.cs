@@ -33,37 +33,34 @@ namespace UI
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            BLL_Usuario u = new BLL_Usuario();
-
             //aca crear un LoginService como esta en mi branch y que haga toda las validaciones de login y retorne resultado booleano para menssage.Box
-            BE_Usuario usuario = u.BuscarPorUsuario(txtUsuario.Text);
+            BE_Usuario usuario = BLL_Usuario.BuscarPorUsuario(txtUsuario.Text);
             BE_Bitacora bitacora = new BE_Bitacora();
-            BLL_Bitacora b = new BLL_Bitacora();
 
             if (usuario.Bloqueado == true) 
             {
                 MessageBox.Show("El usuario se encuentra bloqueado");
                 
-                bitacora.Usuario = "Sin usuario";
-                bitacora.FechaYHora = DateTime.UtcNow.ToString();
+                bitacora.Username = "Sin usuario";
+                bitacora.FechaYHora = DateTime.UtcNow;
                 bitacora.Tipo = "WARNING";
                 bitacora.Descripcion = $"Intento de ingreso con el usuario \"{txtUsuario.Text}\" que se encuentra bloqueado";
 
-                b.Crear(bitacora);
+                BLL_Bitacora.Crear(bitacora);
 
                 return;
             }
 
-            if (usuario.Usuario != txtUsuario.Text)
+            if (usuario.Username != txtUsuario.Text)
             {
                 MessageBox.Show("Usuario o contraseña incorrectos");
                 
-                bitacora.Usuario = "Sin usuario";
-                bitacora.FechaYHora = DateTime.UtcNow.ToString();
+                bitacora.Username = "Sin usuario";
+                bitacora.FechaYHora = DateTime.UtcNow;
                 bitacora.Tipo = "WARNING";
                 bitacora.Descripcion = $"Intento fallido de ingreso con usuario inexistente: \"{txtUsuario.Text}\"";
 
-                b.Crear(bitacora);
+                BLL_Bitacora.Crear(bitacora);
 
                 return;
             }
@@ -72,25 +69,25 @@ namespace UI
             {
                 MessageBox.Show("Usuario o contraseña incorrectos");
 
-                u.IncrementarIntentosFallidos(usuario);
+                BLL_Usuario.IncrementarIntentosFallidos(usuario);
 
-                bitacora.Usuario = "Sin usuario";
-                bitacora.FechaYHora = DateTime.UtcNow.ToString();
+                bitacora.Username = "Sin usuario";
+                bitacora.FechaYHora = DateTime.UtcNow;
                 bitacora.Tipo = "WARNING";
                 bitacora.Descripcion = $"Intento fallido de ingreso con el usuario \"{txtUsuario.Text}\"";
 
-                b.Crear(bitacora);
+                BLL_Bitacora.Crear(bitacora);
 
                 return;
             }
 
             SessionManager.Login(usuario);
-            bitacora.Usuario = SessionManager.GetInstance.usuario.Usuario;
-            bitacora.FechaYHora = DateTime.UtcNow.ToString();
+            bitacora.Username = SessionManager.GetInstance.usuario.Username;
+            bitacora.FechaYHora = DateTime.UtcNow;
             bitacora.Tipo = "INFO";
             bitacora.Descripcion = $"Ingreso al sistema";
 
-            b.Crear(bitacora);
+            BLL_Bitacora.Crear(bitacora);
 
             if (txtPassword.Text == "cambiar")
             {
@@ -104,7 +101,7 @@ namespace UI
             if (usuario.IntentosFallidos != 0)
             {
                 usuario.IntentosFallidos = 0;
-                u.ReiniciarIntentosFallidos(usuario);
+                BLL_Usuario.ReiniciarIntentosFallidos(usuario);
             }
 
             this.Close();

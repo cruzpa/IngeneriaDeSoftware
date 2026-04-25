@@ -8,47 +8,38 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class BLL_Usuario
+    public static class BLL_Usuario
     {
-        //
-        //DAL_Usuario u = new DAL_Usuario();
-        //sacarlo de los metodos
-        public void Crear (BE_Usuario usuario)
+        private readonly static DAL_Usuario u = new DAL_Usuario();
+        public static void Crear (BE_Usuario usuario)
         {
-            DAL_Usuario u = new DAL_Usuario();
             u.Crear(usuario);
         }
 
-        public void CambiarPassword (BE_Usuario usuario)
+        public static void CambiarPassword (BE_Usuario usuario)
         {
-            DAL_Usuario u = new DAL_Usuario();
             u.CambiarPassword(usuario);
         }
 
-        public BE_Usuario BuscarPorUsuario (string usuario)
+        public static BE_Usuario BuscarPorUsuario (string usuario)
         {
-            DAL_Usuario u = new DAL_Usuario();
             return u.BuscarPorUsuario(usuario);
         }
 
-        public List<BE_Usuario> BuscarUsuarios(bool incluireliminados)
+        public static List<BE_Usuario> BuscarUsuarios(bool incluireliminados)
         {
-            DAL_Usuario u = new DAL_Usuario();
             return u.BuscarUsuarios(incluireliminados);
         }
-        public void Modificar (BE_Usuario usuario)
+        public static void Modificar (BE_Usuario usuario)
         {
-            DAL_Usuario u = new DAL_Usuario();
             u.Modificar(usuario);
         }
-        public void IncrementarIntentosFallidos(BE_Usuario usuario)
+        public static void IncrementarIntentosFallidos(BE_Usuario usuario)
         {
-            DAL_Usuario u = new DAL_Usuario();
             u.IncrementarIntentosFallidos(usuario);
         }
-        public void ReiniciarIntentosFallidos(BE_Usuario usuario)
+        public static void ReiniciarIntentosFallidos(BE_Usuario usuario)
         {
-            DAL_Usuario u = new DAL_Usuario();
             u.ReiniciarIntentosFallidos(usuario);
         }
     }

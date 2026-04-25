@@ -7,7 +7,6 @@ namespace DAL
     {
         private SqlConnection conexion;
         private SqlTransaction tx;
-    
 
         public void Abrir()
         {

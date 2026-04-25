@@ -8,13 +8,15 @@ namespace BE
 {
     public class BE_Usuario
     {
-        //agregar id
-        public string Usuario { get; set; } //cambiar a username
+        public int Id { get; set; }
+        public string Username { get; set; } 
         public string Password { get; set; }
         public bool Eliminado { get; set; }
         public int IntentosFallidos { get; set; }
         public bool Bloqueado { get; set; }
-        //agregar info personal, name (nombre de usuario), apellido, email, telefono, etc.
-
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Email { get; set; }
+        public string Telefono { get; set; }
     }
 }

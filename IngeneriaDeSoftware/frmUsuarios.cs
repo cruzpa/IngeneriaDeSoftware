@@ -34,9 +34,7 @@ namespace UI
 
         private void CargarListaUsuarios(bool incluirEliminados) 
         {
-            BLL_Usuario u = new BLL_Usuario();
-            usuarios = u.BuscarUsuarios(incluirEliminados);
-            u = null;
+            usuarios = BLL_Usuario.BuscarUsuarios(incluirEliminados);
         }
         private void ActualizarGrillaUsuarios()
         {
@@ -50,7 +48,7 @@ namespace UI
             foreach (BE_Usuario u in usuarios)
             {
                 DataRow dr = dt.NewRow();
-                dr[0] = u.Usuario;
+                dr[0] = u.Username;
                 dr[1] = u.Password;
                 dr[2] = u.Eliminado;
                 dr[3] = u.IntentosFallidos;
@@ -80,7 +78,7 @@ namespace UI
 
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Ocurrió un problema con la grilla");
             }
@@ -90,15 +88,14 @@ namespace UI
         {
             try
             {
-                BLL_Usuario usuario = new BLL_Usuario();
-                BE_Usuario u = new BE_Usuario();
-                u.Usuario = txtUsuario.Text;
-                u.Password = Seguridad.Encriptar("cambiar");
-                usuario.Crear(u);
+                BE_Usuario usuario = new BE_Usuario();
+                usuario.Username = txtUsuario.Text;
+                usuario.Password = Seguridad.Encriptar("cambiar");
+                BLL_Usuario.Crear(usuario);
                 CargarListaUsuarios(true);
                 ActualizarGrillaUsuarios();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Ocurrió un problema durante la creación del usuario");
             }
@@ -110,8 +107,7 @@ namespace UI
             {
                 if (dgvUsuarios.SelectedRows.Count <= 0) return;
                 BE_Usuario usuario = new BE_Usuario();
-                BLL_Usuario u = new BLL_Usuario();
-                usuario.Usuario = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+                usuario.Username = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
                 
                 if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells[2].Value.ToString())) //Si eliminado = true
                 {
@@ -121,12 +117,12 @@ namespace UI
                 {
                     usuario.Eliminado= true;
                 }
-                u.Modificar(usuario);
+                BLL_Usuario.Modificar(usuario);
 
                 CargarListaUsuarios(true);
                 ActualizarGrillaUsuarios();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Ocurrió un problema durante el borrado del usuario");
             }
@@ -139,16 +135,15 @@ namespace UI
                 if (dgvUsuarios.SelectedRows.Count > 0)
                 {
                     BE_Usuario usuario = new BE_Usuario();
-                    BLL_Usuario u = new BLL_Usuario();
-                    usuario.Usuario = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+                    usuario.Username = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
                     usuario.Password = Seguridad.Encriptar("cambiar");
-                    u.CambiarPassword(usuario);
+                    BLL_Usuario.CambiarPassword(usuario);
 
                     CargarListaUsuarios(true);
                     ActualizarGrillaUsuarios();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Ocurrió un problema al intentar reestablecer la contraseña");
             }
@@ -161,20 +156,19 @@ namespace UI
             {
                 if (dgvUsuarios.SelectedRows.Count <= 0) return;
                 BE_Usuario usuario = new BE_Usuario();
-                BLL_Usuario u = new BLL_Usuario();
-                usuario.Usuario = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+                usuario.Username = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
 
                 if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells[4].Value.ToString())) //Si bloqueado = true
                 {
                     usuario.Bloqueado = false;
                 }
-                u.Modificar(usuario);
-                u.ReiniciarIntentosFallidos(usuario);
+                BLL_Usuario.Modificar(usuario);
+                BLL_Usuario.ReiniciarIntentosFallidos(usuario);
 
                 CargarListaUsuarios(true);
                 ActualizarGrillaUsuarios();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Ocurrió un problema durante el desbloqueo del usuario");
             }
