@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Servicios
 {
-    public static class BLL_Seguridad
+    public static class SeguridadService
     {
         public static string Encriptar(string password)
         {
@@ -24,8 +24,8 @@ namespace Servicios
         }
         public static bool ValidarPassword(string username, string password)
         {
-            BE_Usuario usuario = BLL_Usuario.BuscarPorUsuario(username);
-            if (usuario.Password == BLL_Seguridad.Encriptar(password)) return true;
+            BE_Usuario usuario = UsuarioService.BuscarPorUsuario(username);
+            if (usuario.Password == SeguridadService.Encriptar(password)) return true;
             return false;
         }
     }

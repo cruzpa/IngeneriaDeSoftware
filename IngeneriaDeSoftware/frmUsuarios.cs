@@ -34,7 +34,7 @@ namespace UI
 
         private void CargarListaUsuarios(bool incluirEliminados) 
         {
-            usuarios = BLL_Usuario.BuscarUsuarios(incluirEliminados);
+            usuarios = UsuarioService.BuscarUsuarios(incluirEliminados);
         }
         private void ActualizarGrillaUsuarios()
         {
@@ -54,7 +54,7 @@ namespace UI
             {
                 DataRow dr = dt.NewRow();
                 dr[0] = u.Id;
-                dr[1] = u.User;
+                dr[1] = u.Username;
                 dr[2] = u.Password;
                 dr[3] = u.Nombre;
                 dr[4] = u.Apellido;
@@ -103,9 +103,9 @@ namespace UI
             try
             {
                 BE_Usuario usuario = new BE_Usuario();
-                usuario.User = txtUsername.Text;
-                usuario.Password = BLL_Seguridad.Encriptar("cambiar");
-                BLL_Usuario.Crear(usuario);
+                usuario.Username = txtUsername.Text;
+                usuario.Password = SeguridadService.Encriptar("cambiar");
+                UsuarioService.Crear(usuario);
                 CargarListaUsuarios(true);
                 ActualizarGrillaUsuarios();
             }
@@ -121,7 +121,7 @@ namespace UI
             {
                 if (dgvUsuarios.SelectedRows.Count <= 0) return;
                 BE_Usuario usuario = new BE_Usuario();
-                usuario.User = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+                usuario.Username = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
                 
                 if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells[2].Value.ToString())) //Si eliminado = true
                 {
@@ -131,7 +131,7 @@ namespace UI
                 {
                     usuario.Eliminado= true;
                 }
-                BLL_Usuario.Modificar(usuario);
+                UsuarioService.Modificar(usuario);
 
                 CargarListaUsuarios(true);
                 ActualizarGrillaUsuarios();
@@ -149,9 +149,9 @@ namespace UI
                 if (dgvUsuarios.SelectedRows.Count > 0)
                 {
                     BE_Usuario usuario = new BE_Usuario();
-                    usuario.User = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
-                    usuario.Password = BLL_Seguridad.Encriptar("cambiar");
-                    BLL_Usuario.CambiarPassword(usuario);
+                    usuario.Username = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+                    usuario.Password = SeguridadService.Encriptar("cambiar");
+                    UsuarioService.CambiarPassword(usuario);
 
                     CargarListaUsuarios(true);
                     ActualizarGrillaUsuarios();
@@ -170,14 +170,14 @@ namespace UI
             {
                 if (dgvUsuarios.SelectedRows.Count <= 0) return;
                 BE_Usuario usuario = new BE_Usuario();
-                usuario.User = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+                usuario.Username = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
 
                 if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells[4].Value.ToString())) //Si bloqueado = true
                 {
                     usuario.Bloqueado = false;
                 }
-                BLL_Usuario.Modificar(usuario);
-                BLL_Usuario.ReiniciarIntentosFallidos(usuario);
+                UsuarioService.Modificar(usuario);
+                UsuarioService.ReiniciarIntentosFallidos(usuario);
 
                 CargarListaUsuarios(true);
                 ActualizarGrillaUsuarios();

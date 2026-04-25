@@ -62,7 +62,7 @@ namespace DAL
         public int Escribir(String sql, List<SqlParameter> parameters)
         {
             SqlCommand cmd = CrearComando(sql, parameters);
-            int filas = 0; //cantidad de filas afectadas
+            int filas = 0;
 
             try
             {

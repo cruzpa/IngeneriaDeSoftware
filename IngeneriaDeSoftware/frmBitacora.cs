@@ -38,7 +38,7 @@ namespace UI
         {
             DateTime desde = dtpDesde.Value.ToUniversalTime().Date;
             DateTime hasta = dtpHasta.Value.AddDays(1).ToUniversalTime().Date;//Sumo un día, porque en la DB cuenta las horas, de esta forma toma hasta el día ingresado a las 23:59:59
-            lista = BLL_Bitacora.Buscar(cmbTipo.Text, desde.ToString(), hasta.ToString());
+            lista = BitacoraService.Buscar(cmbTipo.Text, desde.ToString(), hasta.ToString());
         }
         private void ActualizarGrilla()
         {

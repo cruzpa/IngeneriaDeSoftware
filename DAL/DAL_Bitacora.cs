@@ -27,7 +27,7 @@ namespace DAL
                 };
                 resultado = acceso.Escribir($"insert into Bitacora (Usuario, FechaYHora, Tipo, Descripcion) values (@Usuario, @FechaYHora, @Tipo, @Descripcion)", parametros);
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) { throw new Exception("DAL-CREAR BITACORA - " + ex.Message); }
             finally { acceso.Cerrar(); }
             return resultado;
         }
@@ -55,7 +55,7 @@ namespace DAL
                     lista.Add(bitacora);
                 }
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) { throw new Exception("DAL-BUSCAR BITACORA POR FECHAS - " + ex.Message); }
             finally { acceso.Cerrar(); }
             return lista;
         }
@@ -82,7 +82,7 @@ namespace DAL
                     lista.Add(bitacora);
                 }
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) { throw new Exception("DAL-BUSCAR BITACORA POR FECHAS Y TIPO - " + ex.Message); }
             finally { acceso.Cerrar(); }
             return lista;
         }
