@@ -79,11 +79,11 @@ namespace BLL
         {
             try
             {
-                if (usuario.IntentosFallidos >= 4)
+                if (usuario.IntentosFallidos > 4)
                 {
                     u.Bloquear(usuario);
                 }
-                int resultado = IncrementarIntentosFallidos(usuario);
+                int resultado = u.IncrementarIntentosFallidos(usuario);
                 if (resultado == 0) throw new Exception("No se incrementó el contador de intentos fallidos");
                 return resultado;
             }

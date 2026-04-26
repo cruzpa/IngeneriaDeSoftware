@@ -24,7 +24,7 @@ namespace BLL
                 throw new Exception("CREAR BITACORA - " + ex.Message);
             }
         }
-        public static List<BE_Bitacora> Buscar(string fechaInicio, string fechaFin)
+        public static List<BE_Bitacora> Buscar(DateTime fechaInicio, DateTime fechaFin)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace BLL
                 throw new Exception("BUSCAR BITACORA POR FECHAS - " + ex.Message);
             }
         }
-        public static List<BE_Bitacora> Buscar(string tipo, string fechaInicio, string fechafin)
+        public static List<BE_Bitacora> Buscar(string tipo, DateTime fechaInicio, DateTime fechafin)
         {
             try
             {

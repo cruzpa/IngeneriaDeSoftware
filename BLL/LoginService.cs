@@ -27,7 +27,7 @@ namespace BLL
                 {
                     BitacoraService.Crear(new BE_Bitacora()
                     {
-                        Usuario = "Sin usuario",
+                        Username = "Sin usuario",
                         FechaYHora = DateTime.UtcNow,
                         Tipo = "WARNING",
                         Descripcion = $"Intento de LOGIN con usuario inexistente ({username})"
@@ -39,7 +39,7 @@ namespace BLL
                 {
                     BitacoraService.Crear(new BE_Bitacora()
                     {
-                        Usuario = "Sin usuario",
+                        Username = "Sin usuario",
                         FechaYHora = DateTime.UtcNow,
                         Tipo = "WARNING",
                         Descripcion = $"Intento de LOGIN con usuario bloqueado ({username})"
@@ -51,7 +51,7 @@ namespace BLL
                 {
                     BitacoraService.Crear(new BE_Bitacora()
                     {
-                        Usuario = "Sin usuario",
+                        Username = "Sin usuario",
                         FechaYHora = DateTime.UtcNow,
                         Tipo = "WARNING",
                         Descripcion = $"Intento de LOGIN con usuario eliminado ({username})"
@@ -64,7 +64,7 @@ namespace BLL
                     UsuarioService.IncrementarIntentosFallidos(usuario);
                     BitacoraService.Crear(new BE_Bitacora()
                     {
-                        Usuario = "Sin usuario",
+                        Username = "Sin usuario",
                         FechaYHora = DateTime.UtcNow,
                         Tipo = "WARNING",
                         Descripcion = $"Password incorrecto ({username})"
@@ -79,7 +79,7 @@ namespace BLL
                     UsuarioService.ReiniciarIntentosFallidos(usuario);
                     BitacoraService.Crear(new BE_Bitacora()
                     {
-                        Usuario = SessionManager.GetInstance.usuario.Username,
+                        Username = SessionManager.GetInstance.usuario.Username,
                         FechaYHora = DateTime.UtcNow,
                         Tipo = "WARNING",
                         Descripcion = $"Reinicio de contador de intentos de inicio de sesión fallidos"
@@ -88,7 +88,7 @@ namespace BLL
 
                 BitacoraService.Crear(new BE_Bitacora()
                 {
-                    Usuario = SessionManager.GetInstance.usuario.Username,
+                    Username = SessionManager.GetInstance.usuario.Username,
                     FechaYHora = DateTime.UtcNow,
                     Tipo = "INFO",
                     Descripcion = $"Ingreso al sistema)"

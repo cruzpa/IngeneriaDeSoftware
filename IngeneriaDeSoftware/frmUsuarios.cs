@@ -38,40 +38,52 @@ namespace UI
         }
         private void ActualizarGrillaUsuarios()
         {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Id");
-            dt.Columns.Add("Username");
-            dt.Columns.Add("Password");
-            dt.Columns.Add("Nombre");
-            dt.Columns.Add("Apellido");
-            dt.Columns.Add("Email");
-            dt.Columns.Add("Telefono");
-            dt.Columns.Add("Intentos Fallidos");
-            dt.Columns.Add("Bloqueado");
-            dt.Columns.Add("Eliminado");
-            if (usuarios == null) return;
-            foreach (BE_Usuario u in usuarios)
+            try 
             {
-                DataRow dr = dt.NewRow();
-                dr[0] = u.Id;
-                dr[1] = u.Username;
-                dr[2] = u.Password;
-                dr[3] = u.Nombre;
-                dr[4] = u.Apellido;
-                dr[5] = u.Email;
-                dr[6] = u.Telefono;
-                dr[7] = u.IntentosFallidos;
-                dr[8] = u.Bloqueado;
-                dr[9] = u.Eliminado;
-                dt.Rows.Add(dr);
-            }
-            dgvUsuarios.DataSource = dt;
-            
-            if (bool.Parse(dgvUsuarios.Rows[0].Cells[9].Value.ToString())) btnBorrar.Text = "Habilitar"; //Fuerza la actualización del botón borrar
-            else btnBorrar.Text = "Borrar";
-            if (bool.Parse(dgvUsuarios.Rows[0].Cells[8].Value.ToString())) btnDesbloquear.Enabled = true; //Fuerza la actualización del botón desbloquear
-        }
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Id");
+                dt.Columns.Add("Username");
+                dt.Columns.Add("Password");
+                dt.Columns.Add("Nombre");
+                dt.Columns.Add("Apellido");
+                dt.Columns.Add("Email");
+                dt.Columns.Add("Telefono");
+                dt.Columns.Add("Intentos Fallidos");
+                dt.Columns.Add("Bloqueado");
+                dt.Columns.Add("Eliminado");
+                if (usuarios == null) return;
+                foreach (BE_Usuario u in usuarios)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr[0] = u.Id;
+                    dr[1] = u.Username;
+                    dr[2] = u.Password;
+                    dr[3] = u.Nombre;
+                    dr[4] = u.Apellido;
+                    dr[5] = u.Email;
+                    dr[6] = u.Telefono;
+                    dr[7] = u.IntentosFallidos;
+                    dr[8] = u.Bloqueado;
+                    dr[9] = u.Eliminado;
+                    dt.Rows.Add(dr);
+                }
+                dgvUsuarios.DataSource = dt;
 
+                if (bool.Parse(dgvUsuarios.Rows[0].Cells["Eliminado"].Value.ToString())) btnBorrar.Text = "Habilitar"; //Fuerza la actualización del botón borrar
+                else btnBorrar.Text = "Borrar";
+                if (bool.Parse(dgvUsuarios.Rows[0].Cells["Bloqueado"].Value.ToString())) btnDesbloquear.Enabled = true; //Fuerza la actualización del botón desbloquear
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "CRITICAL", ex.Message);
+                    BitacoraService.Crear(bitacora);
+                    MessageBox.Show("Error crítico, contacte al administrador.");
+                }
+                catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
+            }
+        }
         private void dgvUsuarios_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -92,9 +104,15 @@ namespace UI
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Ocurrió un problema con la grilla");
+                try
+                {
+                    BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "CRITICAL", ex.Message);
+                    BitacoraService.Crear(bitacora);
+                    MessageBox.Show("Error crítico, contacte al administrador.");
+                }
+                catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
             }
         }
 
@@ -109,9 +127,15 @@ namespace UI
                 CargarListaUsuarios(true);
                 ActualizarGrillaUsuarios();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Ocurrió un problema durante la creación del usuario");
+                try
+                {
+                    BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "CRITICAL", ex.Message);
+                    BitacoraService.Crear(bitacora);
+                    MessageBox.Show("Error crítico, contacte al administrador.");
+                }
+                catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
             }
         }
 
@@ -136,9 +160,15 @@ namespace UI
                 CargarListaUsuarios(true);
                 ActualizarGrillaUsuarios();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Ocurrió un problema durante el borrado del usuario");
+                try
+                {
+                    BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "CRITICAL", ex.Message);
+                    BitacoraService.Crear(bitacora);
+                    MessageBox.Show("Error crítico, contacte al administrador.");
+                }
+                catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
             }
         }
 
@@ -157,9 +187,15 @@ namespace UI
                     ActualizarGrillaUsuarios();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Ocurrió un problema al intentar reestablecer la contraseña");
+                try
+                {
+                    BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "CRITICAL", ex.Message);
+                    BitacoraService.Crear(bitacora);
+                    MessageBox.Show("Error crítico, contacte al administrador.");
+                }
+                catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
             }
 
         }
@@ -182,9 +218,33 @@ namespace UI
                 CargarListaUsuarios(true);
                 ActualizarGrillaUsuarios();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Ocurrió un problema durante el desbloqueo del usuario");
+                try
+                {
+                    BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "CRITICAL", ex.Message);
+                    BitacoraService.Crear(bitacora);
+                    MessageBox.Show("Error crítico, contacte al administrador.");
+                }
+                catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
+            }
+        }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "CRITICAL", ex.Message);
+                    BitacoraService.Crear(bitacora);
+                    MessageBox.Show("Error crítico, contacte al administrador.");
+                }
+                catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
             }
         }
     }

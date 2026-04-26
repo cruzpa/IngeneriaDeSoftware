@@ -1,4 +1,5 @@
 ﻿using BE;
+using BLL;
 using Servicios;
 using System;
 using System.Collections.Generic;
@@ -22,57 +23,150 @@ namespace UI
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            msMenu.Visible = false;
-            SessionManager.Logout();
-            ssMenu.Visible = false;
-            tsslUsuario.Text = "";
-            AbrirFormulario<frmLogin>(form);
+            try
+            {
+                msMenu.Visible = false;
+                SessionManager.Logout();
+                ssMenu.Visible = false;
+                tsslUsuario.Text = "";
+                AbrirFormulario<frmLogin>(form);
+
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "CRITICAL", ex.Message);
+                    BitacoraService.Crear(bitacora);
+                    MessageBox.Show("Error crítico, contacte al administrador.");
+                }
+                catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
+            }
         }
 
         private void Principal_Load(object sender, EventArgs e)
         {
-            msMenu.Enabled = false;
-            msMenu.Visible = false;
-            ssMenu.Visible = false;
-            tsslUsuario.Text = "";
-            AbrirFormulario<frmLogin>(form);
+            try
+            {
+                msMenu.Enabled = false;
+                msMenu.Visible = false;
+                ssMenu.Visible = false;
+                tsslUsuario.Text = "";
+                AbrirFormulario<frmLogin>(form);
+
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "CRITICAL", ex.Message);
+                    BitacoraService.Crear(bitacora);
+                    MessageBox.Show("Error crítico, contacte al administrador.");
+                }
+                catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
+            }
         }
 
         private void AbrirFormulario<T>(Form f) where T : Form, new()
         {
-            f = new T();
-            if (typeof(T) == typeof(frmLogin)) f.FormClosed += Login;
-            f.MdiParent = this;
-            f.FormClosed += ResetForm;
-            msMenu.Enabled = false;
-            f.Show();
+            try
+            {
+                f = new T();
+                if (typeof(T) == typeof(frmLogin)) f.FormClosed += Login;
+                f.MdiParent = this;
+                f.FormClosed += ResetForm;
+                msMenu.Enabled = false;
+                f.Show();
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "CRITICAL", ex.Message);
+                    BitacoraService.Crear(bitacora);
+                    MessageBox.Show("Error crítico, contacte al administrador.");
+                }
+                catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
+            }
         }
 
         private void ResetForm(object p, EventArgs e)
         {
-            form = null;
-            msMenu.Enabled = true;
-            ssMenu.Visible = true;
-            SessionManager sesion = SessionManager.GetInstance;
-            if (sesion != null)
+            try
             {
-                tsslUsuario.Text = sesion.usuario.User;
+                form = null;
+                msMenu.Enabled = true;
+                ssMenu.Visible = true;
+                SessionManager sesion = SessionManager.GetInstance;
+                if (sesion != null)
+                {
+                    tsslUsuario.Text = sesion.usuario.Username;
+                }
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "CRITICAL", ex.Message);
+                    BitacoraService.Crear(bitacora);
+                    MessageBox.Show("Error crítico, contacte al administrador.");
+                }
+                catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
             }
         }
 
         private void Login(object o, EventArgs e)
         {
-            msMenu.Visible = true;
+            try
+            {
+                msMenu.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "CRITICAL", ex.Message);
+                    BitacoraService.Crear(bitacora);
+                    MessageBox.Show("Error crítico, contacte al administrador.");
+                }
+                catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
+            }
         }
 
         private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirFormulario<frmUsuarios>(form);
+            try
+            {
+                AbrirFormulario<frmUsuarios>(form);
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "CRITICAL", ex.Message);
+                    BitacoraService.Crear(bitacora);
+                    MessageBox.Show("Error crítico, contacte al administrador.");
+                }
+                catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
+            }
         }
 
         private void bitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirFormulario<frmBitacora>(form);
+            try
+            {
+                AbrirFormulario<frmBitacora>(form);
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "CRITICAL", ex.Message);
+                    BitacoraService.Crear(bitacora);
+                    MessageBox.Show("Error crítico, contacte al administrador.");
+                }
+                catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
+            }
         }
     }
 }
