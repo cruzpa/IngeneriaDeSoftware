@@ -67,9 +67,9 @@
             this.cmbTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTipo.FormattingEnabled = true;
             this.cmbTipo.Items.AddRange(new object[] {
-            "INFO",
-            "WARNING",
             "CRITICAL",
+            "WARNING",
+            "INFO",
             "TODOS"});
             this.cmbTipo.Location = new System.Drawing.Point(12, 415);
             this.cmbTipo.Name = "cmbTipo";

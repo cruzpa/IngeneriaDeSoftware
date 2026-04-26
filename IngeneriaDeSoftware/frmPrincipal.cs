@@ -25,6 +25,7 @@ namespace UI
         {
             try
             {
+                BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "INFO", "Sesion cerrada");
                 msMenu.Visible = false;
                 SessionManager.Logout();
                 ssMenu.Visible = false;

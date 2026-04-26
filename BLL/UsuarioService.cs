@@ -15,6 +15,8 @@ namespace BLL
         {
             try
             {
+                BE_Usuario usuarioExiste = u.BuscarPorUsername(usuario.Username);
+                if (usuarioExiste != null) { throw new Exception("EL USERNAME YA ESTÁ EN USO"); }
                 int resultado = u.Crear (usuario);
                 if (resultado == 0) throw new Exception("No se creó el usuario");
                 return resultado;
