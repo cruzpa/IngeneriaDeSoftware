@@ -27,7 +27,7 @@ namespace DAL
                     acceso.CrearParametro("@Email", usuario.Email),
                     acceso.CrearParametro("@Telefono", usuario.Telefono)
                 };
-                resultado = acceso.Escribir($"insert into Usuario (Username, Password, Nombre, Apellido, Email, Telefono, IntentosFaillidos, Bloqueado, Eliminado) values (@Username, @Password, @Nombre, @Apellido, @Email, @Telefono, 0,0,0)", parametros);
+                resultado = acceso.Escribir($"insert into Usuario (Username, Password, Nombre, Apellido, Email, Telefono, IntentosFallidos, Bloqueado, Eliminado) values (@Username, @Password, @Nombre, @Apellido, @Email, @Telefono, 0,0,0)", parametros);
             }
             catch (Exception ex) { throw new Exception("DAL-CREAR USUARIO - " + ex.Message); }
             finally { acceso.Cerrar(); }
@@ -46,7 +46,7 @@ namespace DAL
                     acceso.CrearParametro("@Id", usuario.Id),
                     acceso.CrearParametro("@Password", usuario.Password)
                 };
-                resultado = acceso.Escribir($"update Usuario set Usuario.Password = @Password where Usuario.Usuario = @Id", parametros);
+                resultado = acceso.Escribir($"update Usuario set Usuario.Password = @Password where Usuario.Id = @Id", parametros);
             }
             catch (Exception ex) { throw new Exception("DAL-CAMBIAR PASSWORD - " + ex.Message); }
             finally { acceso.Cerrar(); }
@@ -85,6 +85,40 @@ namespace DAL
             catch (Exception ex) { throw new Exception("DAL-BUSCAR USUARIO POR USERNAME - " + ex.Message); }
             finally { acceso.Cerrar(); }
         }
+        public BE_Usuario BuscarPorId(int id)
+        {
+            acceso.Abrir();
+            try
+            {
+                List<SqlParameter> parametros = new List<SqlParameter>
+                {
+                    acceso.CrearParametro("@Id", id)
+                };
+                SqlDataReader reader = acceso.Leer("select Usuario.Id, Usuario.Username, Usuario.Password, Usuario.Nombre, Usuario.Apellido, Usuario.Email, Usuario.Telefono, Usuario.IntentosFallidos, Usuario.BLoqueado, Usuario.Eliminado from Usuario where Usuario.Id = @Id", parametros);
+                if (reader.Read())
+                {
+                    BE_Usuario usuario = new BE_Usuario();
+                    {
+                        usuario.Id = int.Parse(reader["Id"].ToString());
+                        usuario.Username = reader["Username"].ToString();
+                        usuario.Password = reader["Password"].ToString();
+                        usuario.Nombre = reader["Nombre"].ToString();
+                        usuario.Apellido = reader["Apellido"].ToString();
+                        usuario.Email = reader["Email"].ToString();
+                        usuario.Telefono = reader["Telefono"].ToString();
+                        usuario.IntentosFallidos = int.Parse(reader["IntentosFallidos"].ToString());
+                        usuario.Bloqueado = bool.Parse(reader["Bloqueado"].ToString());
+                        usuario.Eliminado = bool.Parse(reader["Eliminado"].ToString());
+                    }
+                    ;
+                    return usuario;
+                }
+                return null;
+            }
+            catch (Exception ex) { throw new Exception("DAL-BUSCAR USUARIO POR ID - " + ex.Message); }
+            finally { acceso.Cerrar(); }
+        }
+
         public List<BE_Usuario> BuscarUsuarios(bool incluireliminados)
         {
             acceso.Abrir();
@@ -201,7 +235,7 @@ namespace DAL
                 {
                     acceso.CrearParametro("@Id", usuario.Id)
                 };
-                resultado = acceso.Escribir($"update Usuario set Usuario.Bloqueado = ture where Usuario.Id = @Id", parametros);
+                resultado = acceso.Escribir($"update Usuario set Usuario.Bloqueado = 'true' where Usuario.Id = @Id", parametros);
             }
             catch (Exception ex) { throw new Exception("DAL-BLOQUEAR USUARIO - " + ex.Message); }
             finally { acceso.Cerrar(); }
@@ -218,7 +252,7 @@ namespace DAL
                 {
                     acceso.CrearParametro("@Id", usuario.Id)
                 };
-                resultado = acceso.Escribir($"update Usuario set Usuario.Bloqueado = false where Usuario.Id = @Id", parametros);
+                resultado = acceso.Escribir($"update Usuario set Usuario.Bloqueado = 'false' where Usuario.Id = @Id", parametros);
             }
             catch (Exception ex) { throw new Exception("DAL-DESBLOQUEAR USUARIO - " + ex.Message); }
             finally { acceso.Cerrar(); }
@@ -235,7 +269,7 @@ namespace DAL
                 {
                     acceso.CrearParametro("@Id", usuario.Id)
                 };
-                resultado = acceso.Escribir($"update Usuario set Usuario.Eliminado = true where Usuario.Id = @Id", parametros);
+                resultado = acceso.Escribir($"update Usuario set Usuario.Eliminado = 'true' where Usuario.Id = @Id", parametros);
             }
             catch (Exception ex) { throw new Exception("DAL-ELIMINAR USUARIO - " + ex.Message); }
             finally { acceso.Cerrar(); }
@@ -252,7 +286,7 @@ namespace DAL
                 {
                     acceso.CrearParametro("@Id", usuario.Id)
                 };
-                resultado = acceso.Escribir($"update Usuario set Usuario.Eliminado = false where Usuario.Id = @Id", parametros);
+                resultado = acceso.Escribir($"update Usuario set Usuario.Eliminado = 'false' where Usuario.Id = @Id", parametros);
             }
             catch (Exception ex) { throw new Exception("DAL-HABILITAR USUARIO - " + ex.Message); }
             finally { acceso.Cerrar(); }

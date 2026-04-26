@@ -34,7 +34,20 @@ namespace UI
 
         private void CargarListaUsuarios(bool incluirEliminados) 
         {
-            usuarios = UsuarioService.BuscarUsuarios(incluirEliminados);
+            try
+            {
+                usuarios = UsuarioService.BuscarUsuarios(incluirEliminados);
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "CRITICAL", ex.Message);
+                    BitacoraService.Crear(bitacora);
+                    MessageBox.Show("Error crítico, contacte al administrador.");
+                }
+                catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
+            }
         }
         private void ActualizarGrillaUsuarios()
         {
@@ -123,6 +136,10 @@ namespace UI
                 BE_Usuario usuario = new BE_Usuario();
                 usuario.Username = txtUsername.Text;
                 usuario.Password = SeguridadService.Encriptar("cambiar");
+                usuario.Nombre = txtNombre.Text;
+                usuario.Apellido = txtApellido.Text;
+                usuario.Email = txtEmail.Text;
+                usuario.Telefono = txtTelefono.Text;
                 UsuarioService.Crear(usuario);
                 CargarListaUsuarios(true);
                 ActualizarGrillaUsuarios();
@@ -145,17 +162,16 @@ namespace UI
             {
                 if (dgvUsuarios.SelectedRows.Count <= 0) return;
                 BE_Usuario usuario = new BE_Usuario();
-                usuario.Username = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+                usuario.Id = int.Parse(dgvUsuarios.SelectedRows[0].Cells["Id"].Value.ToString());
                 
-                if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells[2].Value.ToString())) //Si eliminado = true
+                if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells["Eliminado"].Value.ToString())) //Si eliminado = true
                 {
-                    usuario.Eliminado = false;
+                    UsuarioService.Habilitar(usuario);
                 }
                 else //Si eliminado = false
                 {
-                    usuario.Eliminado= true;
+                    UsuarioService.Eliminar(usuario);
                 }
-                UsuarioService.Modificar(usuario);
 
                 CargarListaUsuarios(true);
                 ActualizarGrillaUsuarios();
@@ -179,7 +195,7 @@ namespace UI
                 if (dgvUsuarios.SelectedRows.Count > 0)
                 {
                     BE_Usuario usuario = new BE_Usuario();
-                    usuario.Username = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+                    usuario.Id = int.Parse(dgvUsuarios.SelectedRows[0].Cells["Id"].Value.ToString());
                     usuario.Password = SeguridadService.Encriptar("cambiar");
                     UsuarioService.CambiarPassword(usuario);
 
@@ -206,14 +222,13 @@ namespace UI
             {
                 if (dgvUsuarios.SelectedRows.Count <= 0) return;
                 BE_Usuario usuario = new BE_Usuario();
-                usuario.Username = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+                usuario.Id = int.Parse(dgvUsuarios.SelectedRows[0].Cells["Id"].Value.ToString());
 
-                if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells[4].Value.ToString())) //Si bloqueado = true
+                if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells["Bloqueado"].Value.ToString())) //Si bloqueado = true
                 {
-                    usuario.Bloqueado = false;
+                    UsuarioService.Desbloquear(usuario);
+                    UsuarioService.ReiniciarIntentosFallidos(usuario);
                 }
-                UsuarioService.Modificar(usuario);
-                UsuarioService.ReiniciarIntentosFallidos(usuario);
 
                 CargarListaUsuarios(true);
                 ActualizarGrillaUsuarios();
@@ -234,7 +249,15 @@ namespace UI
         {
             try
             {
-
+                BE_Usuario usuario = new BE_Usuario();
+                usuario.Id = int.Parse(dgvUsuarios.SelectedRows[0].Cells["Id"].Value.ToString());
+                usuario.Nombre = txtNombre.Text;
+                usuario.Apellido = txtApellido.Text;
+                usuario.Email = txtEmail.Text;
+                usuario.Telefono = txtTelefono.Text;
+                UsuarioService.Modificar(usuario);
+                CargarListaUsuarios(true);
+                ActualizarGrillaUsuarios();
             }
             catch (Exception ex)
             {

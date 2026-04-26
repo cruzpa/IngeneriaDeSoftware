@@ -50,6 +50,17 @@ namespace BLL
                 throw new Exception("BUSCAR POR USUARIO - " + ex.Message);
             }
         }
+        public static BE_Usuario BuscarPorId(int id)
+        {
+            try
+            {
+                return u.BuscarPorId(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("BUSCAR POR Id - " + ex.Message);
+            }
+        }
 
         public static List<BE_Usuario> BuscarUsuarios(bool incluireliminados)
         {
@@ -83,6 +94,7 @@ namespace BLL
                 {
                     u.Bloquear(usuario);
                 }
+                usuario.IntentosFallidos++;
                 int resultado = u.IncrementarIntentosFallidos(usuario);
                 if (resultado == 0) throw new Exception("No se incrementó el contador de intentos fallidos");
                 return resultado;
