@@ -24,7 +24,7 @@ namespace UI
         {
             BLL_Usuario u = new BLL_Usuario();
             BE_Usuario usuario = SessionManager.GetInstance.usuario;
-            usuario.Password = Seguridad.Encriptar(txtPassword.Text);
+            usuario.Password = SecurityService.Encriptar(txtPassword.Text);
             u.CambiarPassword(usuario);
             this.Close();
         }

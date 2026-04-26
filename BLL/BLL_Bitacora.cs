@@ -10,23 +10,23 @@ namespace BLL
 {
     public class BLL_Bitacora
     {
-        // DAL_Bitacora b = new DAL_Bitacora();
-        //sacar de los metodos
-        public void Crear(BE_Bitacora bitacora)
+        DAL_Bitacora b = new DAL_Bitacora();
+
+        public int Crear(BE_Bitacora bitacora)
         {
-            DAL_Bitacora b = new DAL_Bitacora();
-            b.Crear(bitacora);
+            int filas = b.Crear(bitacora);
+            if (filas < 0)
+            {
+                Console.WriteLine("Error al crear la bitacora");
+            }
+            return filas;
         }
         public List<BE_Bitacora> Buscar(string tipo, string fechaInicio)
         {
-            List<BE_Bitacora> lista = new List<BE_Bitacora>();
-            DAL_Bitacora b = new DAL_Bitacora();
             return b.Buscar(tipo, fechaInicio);
         }
         public List<BE_Bitacora> Buscar(string tipo, string fechaInicio, string fechafin)
         {
-            List<BE_Bitacora> lista = new List<BE_Bitacora>();
-            DAL_Bitacora b = new DAL_Bitacora();
             return b.Buscar(tipo, fechaInicio, fechafin);
         }
     }

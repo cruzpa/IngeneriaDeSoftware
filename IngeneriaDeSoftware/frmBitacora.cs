@@ -45,7 +45,7 @@ namespace UI
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("Id");
-            dt.Columns.Add("Usuario");
+            dt.Columns.Add("Username");
             dt.Columns.Add("Fecha");
             dt.Columns.Add("Tipo");
             dt.Columns.Add("Descripcion");
@@ -54,8 +54,8 @@ namespace UI
             {
                 DataRow dr = dt.NewRow();
                 dr[0] = b.Id;
-                dr[1] = b.Usuario;
-                dr[2] = DateTime.Parse(b.FechaYHora).ToLocalTime();
+                dr[1] = b.Username;
+                dr[2] = b.FechaYHora.ToLocalTime();
                 dr[3] = b.Tipo;
                 dr[4] = b.Descripcion;
                 dt.Rows.Add(dr);

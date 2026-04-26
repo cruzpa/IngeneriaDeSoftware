@@ -11,11 +11,9 @@ namespace DAL
     public class DAL_Usuario
     {
         //Acceso acceso = new Acceso();
-        //sacarlo de los metodos 
         //usar sqlParameter para evitar inyeccion sql
         public void Crear(BE_Usuario usuario)
         {
-            Acceso acceso = new Acceso();
             acceso.Abrir();
             acceso.Escribir($"insert into usuario (Usuario, Password, Eliminado, IntentosFallidos, Bloqueado) values ('{usuario.Usuario}', '{usuario.Password}', '{usuario.Eliminado}', 0, 0)");
             acceso.Cerrar();
@@ -23,7 +21,6 @@ namespace DAL
 
         public void CambiarPassword(BE_Usuario usuario)
         {
-            Acceso acceso = new Acceso();
             acceso.Abrir();
             acceso.Escribir($"update Usuario set Usuario.Password = '{usuario.Password}' where Usuario.Usuario = '{usuario.Usuario}'");
             acceso.Cerrar();
@@ -31,7 +28,6 @@ namespace DAL
         public BE_Usuario BuscarPorUsuario(string user)
         {
             BE_Usuario usuario = new BE_Usuario();
-            Acceso acceso = new Acceso();
             acceso.Abrir();
             SqlDataReader reader = acceso.Leer($"select u.Usuario, u.Password, u.Eliminado, u.IntentosFallidos, u.Bloqueado from Usuario u where u.Usuario = '{user}' and u.Eliminado = 0");
             while (reader.Read())
@@ -48,7 +44,6 @@ namespace DAL
         public List<BE_Usuario> BuscarUsuarios(bool incluireliminados)
         {
             List<BE_Usuario> usuarios = new List<BE_Usuario>();
-            Acceso acceso = new Acceso();
             acceso.Abrir();
             if (incluireliminados)
             {
@@ -83,7 +78,6 @@ namespace DAL
         }
         public void Modificar(BE_Usuario usuario)
         {
-            Acceso acceso = new Acceso();
             acceso.Abrir();
             //mover logica a BLL para que no haya logica de negocio en DAL y agregar funciones Desbloquear, Bloquear, Eliminar, Restaurar
             if (usuario.Eliminado && usuario.Bloqueado) acceso.Escribir($"update Usuario set Usuario.Eliminado = 1, Usuario.Bloqueado = 1 where Usuario.Usuario = '{usuario.Usuario}'");
@@ -104,7 +98,6 @@ namespace DAL
             else
             {
                 usuario.IntentosFallidos++;
-                Acceso acceso = new Acceso();
                 acceso.Abrir();
                 acceso.Escribir($"update Usuario set Usuario.IntentosFallidos = {usuario.IntentosFallidos} where Usuario.Usuario = '{usuario.Usuario}'");
                 acceso.Cerrar();
@@ -113,7 +106,6 @@ namespace DAL
 
         public void ReiniciarIntentosFallidos(BE_Usuario usuario)
         {
-            Acceso acceso= new Acceso();
             acceso.Abrir();
             acceso.Escribir($"update Usuario set Usuario.IntentosFallidos = {usuario.IntentosFallidos} where Usuario.Usuario = '{usuario.Usuario}'");
             acceso.Cerrar();

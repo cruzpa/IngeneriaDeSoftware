@@ -50,7 +50,7 @@ namespace UI
             foreach (BE_Usuario u in usuarios)
             {
                 DataRow dr = dt.NewRow();
-                dr[0] = u.Usuario;
+                dr[0] = u.Username;
                 dr[1] = u.Password;
                 dr[2] = u.Eliminado;
                 dr[3] = u.IntentosFallidos;
@@ -92,8 +92,8 @@ namespace UI
             {
                 BLL_Usuario usuario = new BLL_Usuario();
                 BE_Usuario u = new BE_Usuario();
-                u.Usuario = txtUsuario.Text;
-                u.Password = Seguridad.Encriptar("cambiar");
+                u.Username = txtUsuario.Text;
+                u.Password = SecurityService.Encriptar("cambiar");
                 usuario.Crear(u);
                 CargarListaUsuarios(true);
                 ActualizarGrillaUsuarios();
@@ -111,7 +111,7 @@ namespace UI
                 if (dgvUsuarios.SelectedRows.Count <= 0) return;
                 BE_Usuario usuario = new BE_Usuario();
                 BLL_Usuario u = new BLL_Usuario();
-                usuario.Usuario = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+                usuario.Username = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
                 
                 if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells[2].Value.ToString())) //Si eliminado = true
                 {
@@ -140,8 +140,8 @@ namespace UI
                 {
                     BE_Usuario usuario = new BE_Usuario();
                     BLL_Usuario u = new BLL_Usuario();
-                    usuario.Usuario = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
-                    usuario.Password = Seguridad.Encriptar("cambiar");
+                    usuario.Username = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+                    usuario.Password = SecurityService.Encriptar("cambiar");
                     u.CambiarPassword(usuario);
 
                     CargarListaUsuarios(true);
@@ -162,7 +162,7 @@ namespace UI
                 if (dgvUsuarios.SelectedRows.Count <= 0) return;
                 BE_Usuario usuario = new BE_Usuario();
                 BLL_Usuario u = new BLL_Usuario();
-                usuario.Usuario = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
+                usuario.Username = dgvUsuarios.SelectedRows[0].Cells[0].Value.ToString();
 
                 if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells[4].Value.ToString())) //Si bloqueado = true
                 {

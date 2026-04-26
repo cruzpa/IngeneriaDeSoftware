@@ -10,7 +10,7 @@ namespace DAL
 {
     public class DAL_Bitacora
     {
-        public void Crear(BE_Bitacora bitacora)
+        public int Crear(BE_Bitacora bitacora)
         {
             Acceso acceso = new Acceso();
             acceso.Abrir();
@@ -18,9 +18,9 @@ namespace DAL
             //var parametros = new List<SqlParameter>();
             //parametros.Add(acceso.CrearParametro("@username", u.Username));
             //string queryCheck = "SELECT COUNT(1) FROM Usuario WHERE Username = @username";
-            acceso.Escribir($"insert into Bitacora (Usuario, FechaYHora, Tipo, Descripcion) values ('{bitacora.Usuario}', '{bitacora.FechaYHora}', '{bitacora.Tipo}', '{bitacora.Descripcion}')");
+            int filas = acceso.Escribir($"insert into Bitacora (Usuario, FechaYHora, Tipo, Descripcion) values ('{bitacora.Username}', '{bitacora.FechaYHora}', '{bitacora.Tipo}', '{bitacora.Descripcion}')");
             acceso.Cerrar();
-            //
+            return filas;
         }
 
         public List<BE_Bitacora> Buscar(string tipo, string fechaInicio)

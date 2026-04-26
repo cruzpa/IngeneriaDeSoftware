@@ -8,8 +8,8 @@ namespace BE
 {
     public class BE_Usuario
     {
-        //agregar id
-        public string Usuario { get; set; } //cambiar a username
+        public int Id {  get; set; }
+        public string Username { get; set; } 
         public string Password { get; set; }
         public bool Eliminado { get; set; }
         public int IntentosFallidos { get; set; }

@@ -44,8 +44,8 @@ namespace UI
             {
                 MessageBox.Show("El usuario se encuentra bloqueado");
                 
-                bitacora.Usuario = "Sin usuario";
-                bitacora.FechaYHora = DateTime.UtcNow.ToString();
+                bitacora.Username = "Sin usuario";
+                bitacora.FechaYHora = DateTimeOffset.Now;
                 bitacora.Tipo = "WARNING";
                 bitacora.Descripcion = $"Intento de ingreso con el usuario \"{txtUsuario.Text}\" que se encuentra bloqueado";
 
@@ -54,12 +54,12 @@ namespace UI
                 return;
             }
 
-            if (usuario.Usuario != txtUsuario.Text)
+            if (usuario.Username != txtUsuario.Text)
             {
                 MessageBox.Show("Usuario o contraseña incorrectos");
                 
-                bitacora.Usuario = "Sin usuario";
-                bitacora.FechaYHora = DateTime.UtcNow.ToString();
+                bitacora.Username = "Sin usuario";
+                bitacora.FechaYHora = DateTimeOffset.Now;
                 bitacora.Tipo = "WARNING";
                 bitacora.Descripcion = $"Intento fallido de ingreso con usuario inexistente: \"{txtUsuario.Text}\"";
 
@@ -68,14 +68,14 @@ namespace UI
                 return;
             }
 
-            if (usuario.Password != Seguridad.Encriptar(txtPassword.Text))
+            if (usuario.Password != SecurityService.Encriptar(txtPassword.Text))
             {
                 MessageBox.Show("Usuario o contraseña incorrectos");
 
                 u.IncrementarIntentosFallidos(usuario);
 
-                bitacora.Usuario = "Sin usuario";
-                bitacora.FechaYHora = DateTime.UtcNow.ToString();
+                bitacora.Username = "Sin usuario";
+                bitacora.FechaYHora = DateTimeOffset.Now;
                 bitacora.Tipo = "WARNING";
                 bitacora.Descripcion = $"Intento fallido de ingreso con el usuario \"{txtUsuario.Text}\"";
 
@@ -85,8 +85,8 @@ namespace UI
             }
 
             SessionManager.Login(usuario);
-            bitacora.Usuario = SessionManager.GetInstance.usuario.Usuario;
-            bitacora.FechaYHora = DateTime.UtcNow.ToString();
+            bitacora.Username = SessionManager.GetInstance.usuario.Username;
+            bitacora.FechaYHora = DateTimeOffset.Now;
             bitacora.Tipo = "INFO";
             bitacora.Descripcion = $"Ingreso al sistema";
 
