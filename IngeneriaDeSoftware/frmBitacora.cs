@@ -35,6 +35,7 @@ namespace UI
                 dtpHasta.Value = DateTime.Now;
                 CargarLista();
                 ActualizarGrilla();
+                ConfigurarGrilla();
             }
             catch (Exception ex)
             {
@@ -90,6 +91,26 @@ namespace UI
                     dt.Rows.Add(dr);
                 }
                 dgvBitacora.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "CRITICAL", ex.Message);
+                    BitacoraService.Crear(bitacora);
+                    MessageBox.Show("Error crítico, contacte al administrador.");
+                }
+                catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
+            }
+        }
+        private void ConfigurarGrilla()
+        {
+            try
+            {
+                dgvBitacora.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                dgvBitacora.Columns["Descripcion"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgvBitacora.Columns["Descripcion"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                dgvBitacora.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             }
             catch (Exception ex)
             {

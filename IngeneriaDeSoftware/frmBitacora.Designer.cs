@@ -42,7 +42,7 @@
             // 
             // btnCerrar
             // 
-            this.btnCerrar.Location = new System.Drawing.Point(713, 415);
+            this.btnCerrar.Location = new System.Drawing.Point(834, 415);
             this.btnCerrar.Name = "btnCerrar";
             this.btnCerrar.Size = new System.Drawing.Size(75, 23);
             this.btnCerrar.TabIndex = 0;
@@ -59,7 +59,7 @@
             this.dgvBitacora.Name = "dgvBitacora";
             this.dgvBitacora.ReadOnly = true;
             this.dgvBitacora.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvBitacora.Size = new System.Drawing.Size(776, 366);
+            this.dgvBitacora.Size = new System.Drawing.Size(897, 366);
             this.dgvBitacora.TabIndex = 1;
             // 
             // cmbTipo
@@ -131,7 +131,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(921, 450);
             this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.lblHasta);
             this.Controls.Add(this.lblDesde);

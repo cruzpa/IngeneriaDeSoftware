@@ -30,6 +30,7 @@ namespace UI
         {
             CargarListaUsuarios(true);
             ActualizarGrillaUsuarios();
+            ConfigurarGrilla();
         }
 
         private void CargarListaUsuarios(bool incluirEliminados) 
@@ -232,6 +233,25 @@ namespace UI
 
                 CargarListaUsuarios(true);
                 ActualizarGrillaUsuarios();
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "CRITICAL", ex.Message);
+                    BitacoraService.Crear(bitacora);
+                    MessageBox.Show("Error crítico, contacte al administrador.");
+                }
+                catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
+            }
+        }
+        
+        private void ConfigurarGrilla()
+        {
+            try
+            {
+                dgvUsuarios.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                dgvUsuarios.Columns["Password"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
             catch (Exception ex)
             {

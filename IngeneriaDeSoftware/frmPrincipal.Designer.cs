@@ -47,7 +47,7 @@
             this.bitToolStripMenuItem});
             this.msMenu.Location = new System.Drawing.Point(0, 0);
             this.msMenu.Name = "msMenu";
-            this.msMenu.Size = new System.Drawing.Size(1113, 24);
+            this.msMenu.Size = new System.Drawing.Size(1032, 24);
             this.msMenu.TabIndex = 1;
             this.msMenu.Text = "menuStrip1";
             // 
@@ -95,7 +95,7 @@
             this.tsslUsuario});
             this.ssMenu.Location = new System.Drawing.Point(0, 608);
             this.ssMenu.Name = "ssMenu";
-            this.ssMenu.Size = new System.Drawing.Size(1113, 22);
+            this.ssMenu.Size = new System.Drawing.Size(1032, 22);
             this.ssMenu.TabIndex = 3;
             this.ssMenu.Text = "statusStrip1";
             // 
@@ -109,7 +109,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1113, 630);
+            this.ClientSize = new System.Drawing.Size(1032, 630);
             this.Controls.Add(this.ssMenu);
             this.Controls.Add(this.msMenu);
             this.IsMdiContainer = true;
