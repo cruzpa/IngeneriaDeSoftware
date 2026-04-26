@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Servicios
 {
+    //mover a BLL
     public class Seguridad
     {
         private static string llave = "$IB$Encrypt$Code";

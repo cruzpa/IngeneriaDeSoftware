@@ -8,7 +8,15 @@ namespace BE
 {
     public class BE_Usuario
     {
-        public string Usuario { get; set; }
+        public int Id { get; set; }
+        public string Username { get; set; } 
         public string Password { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Email { get; set; }
+        public string Telefono { get; set; }
+        public int IntentosFallidos { get; set; }
+        public bool Bloqueado { get; set; }
+        public bool Eliminado { get; set; }
     }
 }
