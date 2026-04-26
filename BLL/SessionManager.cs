@@ -12,7 +12,7 @@ namespace Servicios
     {
         private static SessionManager _session;
         private static object _lock = new object();
-        public BE_Usuario usuario { get; set; }
+        public BE_Usuario usuario { get; private set; }
 
         public static SessionManager GetInstance
         {

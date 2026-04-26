@@ -16,7 +16,6 @@ namespace DAL
             conexion.ConnectionString = "Initial catalog=TP; Data Source=DESKTOP-JRRFOTR.;integrated security=SSPI";
             conexion.Open();
         }
-
         public void Cerrar()
         {
             conexion.Close();
@@ -29,7 +28,6 @@ namespace DAL
                 tx = conexion.BeginTransaction();
             }
         }
-
         public void confirmarTx()
         {
             if (tx != null)
@@ -38,7 +36,6 @@ namespace DAL
                 tx = null;
             }
         }
-
         public void cancelarTx()
         {
             if (tx != null)
@@ -58,8 +55,7 @@ namespace DAL
             if (tx != null) cmd.Transaction = tx;
             return cmd;
         }
-
-        public int Escribir(String sql, List<SqlParameter> parameters)
+        public int Escribir(string sql, List<SqlParameter> parameters)
         {
             SqlCommand cmd = CrearComando(sql, parameters);
             int filas = 0;
@@ -74,12 +70,12 @@ namespace DAL
             }
             return filas;
         }
-        public SqlDataReader Leer(String sql, List<SqlParameter> parameters = null)
+        public SqlDataReader Leer(string sql, List<SqlParameter> parameters = null)
         {
             SqlCommand cmd = CrearComando(sql, parameters);
             return cmd.ExecuteReader();
         }
-        public int LeerEscalar(String sql, List<SqlParameter> parameters = null)
+        public int LeerEscalar(string sql, List<SqlParameter> parameters = null)
         {
             SqlCommand cmd = CrearComando(sql, parameters);
             return int.Parse(cmd.ExecuteScalar().ToString());
@@ -90,14 +86,12 @@ namespace DAL
             p.DbType = System.Data.DbType.String;
             return p;
         }
-
         public SqlParameter CrearParametro(string name, int value)
         {
             SqlParameter p = new SqlParameter(name, value);
             p.DbType = System.Data.DbType.Int32;
             return p;
         }
-
         public SqlParameter CrearParametro(string name, float value)
         {
             SqlParameter p = new SqlParameter(name, value);

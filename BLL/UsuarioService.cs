@@ -41,11 +41,11 @@ namespace BLL
             }
         }
 
-        public static BE_Usuario BuscarPorUsuario (string usuario)
+        public static BE_Usuario BuscarPorUsuario (string username)
         {
             try
             {
-                return u.BuscarPorUsername(usuario);
+                return u.BuscarPorUsername(username);
             }
             catch (Exception ex)
             {

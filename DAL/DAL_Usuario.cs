@@ -33,7 +33,6 @@ namespace DAL
             finally { acceso.Cerrar(); }
             return resultado;
         }
-
         public int CambiarPassword(BE_Usuario usuario)
         {
             int resultado = 0;
@@ -118,15 +117,14 @@ namespace DAL
             catch (Exception ex) { throw new Exception("DAL-BUSCAR USUARIO POR ID - " + ex.Message); }
             finally { acceso.Cerrar(); }
         }
-
-        public List<BE_Usuario> BuscarUsuarios(bool incluireliminados)
+        public List<BE_Usuario> BuscarUsuarios(bool incluirEliminados)
         {
             acceso.Abrir();
             List<BE_Usuario> usuarios = new List<BE_Usuario>();
             try
             {
                 SqlDataReader reader;
-                if (incluireliminados) reader = acceso.Leer("select Usuario.Id, Usuario.Username, Usuario.Password, Usuario.Nombre, Usuario.Apellido, Usuario.Email, Usuario.Telefono, Usuario.IntentosFallidos, Usuario.BLoqueado, Usuario.Eliminado from Usuario");
+                if (incluirEliminados) reader = acceso.Leer("select Usuario.Id, Usuario.Username, Usuario.Password, Usuario.Nombre, Usuario.Apellido, Usuario.Email, Usuario.Telefono, Usuario.IntentosFallidos, Usuario.BLoqueado, Usuario.Eliminado from Usuario");
                 else reader = acceso.Leer("select Usuario.Id, Usuario.Username, Usuario.Password, Usuario.Nombre, Usuario.Apellido, Usuario.Email, Usuario.Telefono, Usuario.IntentosFallidos, Usuario.BLoqueado, Usuario.Eliminado from Usuario where Usuario.Eliminado = 'false'");
                 while (reader.Read())
                 {
@@ -187,7 +185,6 @@ namespace DAL
             finally { acceso.Cerrar(); }
             return resultado;
         }
-
         public int IncrementarIntentosFallidos(BE_Usuario usuario)
         {
             int resultado = 0;
@@ -206,7 +203,6 @@ namespace DAL
             finally { acceso.Cerrar(); }
             return resultado;
         }
-
         public int ReiniciarIntentosFallidos(BE_Usuario usuario)
         {
             int resultado = 0;
