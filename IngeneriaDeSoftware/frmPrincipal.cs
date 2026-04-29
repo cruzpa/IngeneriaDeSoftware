@@ -26,6 +26,7 @@ namespace UI
             try
             {
                 BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "INFO", "Sesion cerrada");
+                BitacoraService.Crear(bitacora);
                 msMenu.Visible = false;
                 SessionManager.Logout();
                 ssMenu.Visible = false;
@@ -168,6 +169,19 @@ namespace UI
                 }
                 catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
             }
+        }
+
+        private void frmPrincipal_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (SessionManager.GetInstance != null) 
+            {
+                BE_Bitacora bitacora = new BE_Bitacora(SessionManager.GetInstance.usuario.Username, DateTime.UtcNow, "INFO", "Sesion cerrada");
+                BitacoraService.Crear(bitacora);
+                SessionManager.Logout();
+            }
+            msMenu.Visible = false;
+            ssMenu.Visible = false;
+            tsslUsuario.Text = "";
         }
     }
 }

@@ -65,7 +65,7 @@
             this.administrarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.usuariosToolStripMenuItem});
             this.administrarToolStripMenuItem.Name = "administrarToolStripMenuItem";
-            this.administrarToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.administrarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.administrarToolStripMenuItem.Text = "Administrar";
             // 
             // usuariosToolStripMenuItem
@@ -78,7 +78,7 @@
             // salirToolStripMenuItem
             // 
             this.salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-            this.salirToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.salirToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.salirToolStripMenuItem.Text = "Salir";
             this.salirToolStripMenuItem.Click += new System.EventHandler(this.salirToolStripMenuItem_Click);
             // 
@@ -117,6 +117,7 @@
             this.Name = "frmPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TP";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmPrincipal_FormClosing);
             this.Load += new System.EventHandler(this.Principal_Load);
             this.msMenu.ResumeLayout(false);
             this.msMenu.PerformLayout();

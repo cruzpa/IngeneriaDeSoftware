@@ -91,7 +91,7 @@ namespace BLL
                     Username = SessionManager.GetInstance.usuario.Username,
                     FechaYHora = DateTime.UtcNow,
                     Tipo = "INFO",
-                    Descripcion = $"Ingreso al sistema)"
+                    Descripcion = $"Ingreso al sistema"
                 });
 
                 if (password == "cambiar")
