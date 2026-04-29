@@ -24,9 +24,14 @@ namespace UI
         {
             try
             {
-                BE_Usuario usuario = SessionManager.GetInstance.usuario;
-                usuario.Password = SeguridadService.Encriptar(txtPassword.Text);
-                UsuarioService.CambiarPassword(usuario);
+                if (txtPassword.Text == string.Empty) { MessageBox.Show("Debe ingresar una Contraseña para continuar"); }
+                else
+                {
+                    BE_Usuario usuario = SessionManager.GetInstance.usuario;
+                    usuario.Password = SeguridadService.Encriptar(txtPassword.Text);
+                    UsuarioService.CambiarPassword(usuario);
+                    this.Close();
+                }
             }
             catch (Exception ex)
             {
@@ -38,7 +43,6 @@ namespace UI
                 }
                 catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
             }
-            finally { this.Close(); }
         }
     }
 }

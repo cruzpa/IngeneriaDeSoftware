@@ -26,7 +26,6 @@ namespace BLL
                 throw new Exception("CREAR USUARIO - " + ex.Message);
             } 
         }
-
         public static int CambiarPassword (BE_Usuario usuario)
         {
             try
@@ -40,7 +39,6 @@ namespace BLL
                 throw new Exception("CAMBIAR PASSWORD - " + ex.Message);
             }
         }
-
         public static BE_Usuario BuscarPorUsuario (string username)
         {
             try
@@ -63,7 +61,6 @@ namespace BLL
                 throw new Exception("BUSCAR POR Id - " + ex.Message);
             }
         }
-
         public static List<BE_Usuario> BuscarUsuarios(bool incluireliminados)
         {
             try

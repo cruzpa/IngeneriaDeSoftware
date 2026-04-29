@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -134,16 +135,19 @@ namespace UI
         {
             try
             {
-                BE_Usuario usuario = new BE_Usuario();
-                usuario.Username = txtUsername.Text;
-                usuario.Password = SeguridadService.Encriptar("cambiar");
-                usuario.Nombre = txtNombre.Text;
-                usuario.Apellido = txtApellido.Text;
-                usuario.Email = txtEmail.Text;
-                usuario.Telefono = txtTelefono.Text;
-                UsuarioService.Crear(usuario);
-                CargarListaUsuarios(true);
-                ActualizarGrillaUsuarios();
+                if (ValidarDatos())
+                {
+                    BE_Usuario usuario = new BE_Usuario();
+                    usuario.Username = txtUsername.Text;
+                    usuario.Password = SeguridadService.Encriptar("cambiar");
+                    usuario.Nombre = txtNombre.Text;
+                    usuario.Apellido = txtApellido.Text;
+                    usuario.Email = txtEmail.Text;
+                    usuario.Telefono = txtTelefono.Text;
+                    UsuarioService.Crear(usuario);
+                    CargarListaUsuarios(true);
+                    ActualizarGrillaUsuarios();
+                }
             }
             catch (Exception ex)
             {
@@ -161,7 +165,11 @@ namespace UI
         {
             try
             {
-                if (dgvUsuarios.SelectedRows.Count <= 0) return;
+                if (dgvUsuarios.SelectedRows.Count <= 0) 
+                {
+                    MessageBox.Show("Debe seleccionar un usuario de la grilla");
+                    return;
+                } 
                 BE_Usuario usuario = new BE_Usuario();
                 usuario.Id = int.Parse(dgvUsuarios.SelectedRows[0].Cells["Id"].Value.ToString());
                 
@@ -203,6 +211,10 @@ namespace UI
                     CargarListaUsuarios(true);
                     ActualizarGrillaUsuarios();
                 }
+                else 
+                {
+                    MessageBox.Show("Debe seleccionar un usuario de la grilla");
+                }
             }
             catch (Exception ex)
             {
@@ -221,7 +233,11 @@ namespace UI
         {
             try
             {
-                if (dgvUsuarios.SelectedRows.Count <= 0) return;
+                if (dgvUsuarios.SelectedRows.Count <= 0) 
+                {
+                    MessageBox.Show("Debe seleccionar un usuario de la grilla");
+                    return;
+                }
                 BE_Usuario usuario = new BE_Usuario();
                 usuario.Id = int.Parse(dgvUsuarios.SelectedRows[0].Cells["Id"].Value.ToString());
 
@@ -269,15 +285,18 @@ namespace UI
         {
             try
             {
-                BE_Usuario usuario = new BE_Usuario();
-                usuario.Id = int.Parse(dgvUsuarios.SelectedRows[0].Cells["Id"].Value.ToString());
-                usuario.Nombre = txtNombre.Text;
-                usuario.Apellido = txtApellido.Text;
-                usuario.Email = txtEmail.Text;
-                usuario.Telefono = txtTelefono.Text;
-                UsuarioService.Modificar(usuario);
-                CargarListaUsuarios(true);
-                ActualizarGrillaUsuarios();
+                if (ValidarDatos())
+                {
+                    BE_Usuario usuario = new BE_Usuario();
+                    usuario.Id = int.Parse(dgvUsuarios.SelectedRows[0].Cells["Id"].Value.ToString());
+                    usuario.Nombre = txtNombre.Text;
+                    usuario.Apellido = txtApellido.Text;
+                    usuario.Email = txtEmail.Text;
+                    usuario.Telefono = txtTelefono.Text;
+                    UsuarioService.Modificar(usuario);
+                    CargarListaUsuarios(true);
+                    ActualizarGrillaUsuarios();
+                }
             }
             catch (Exception ex)
             {
@@ -288,6 +307,65 @@ namespace UI
                     MessageBox.Show("Error crítico, contacte al administrador.");
                 }
                 catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
+            }
+        }
+        private bool ValidarDatos()
+        {
+            if (!ValidarUsername())
+            {
+                MessageBox.Show("Debe ingresar un nombre de usuario.");
+                return false;
+            }
+            if (!ValidarNombreYApellido())
+            {
+                MessageBox.Show("El Nombre y Apellido deben contener únicamente letras y no pueden estar vacíos.");
+                return false;
+            }
+            if (!ValidarCorreoElectronico()) 
+            {
+                MessageBox.Show("Ingrese un correo electrónico válido.");
+                return false;
+            }
+            if (!ValidarTelefono())
+            {
+                MessageBox.Show("Ingrese un número de teléfono válido (sin guiones ni puntos)");
+                return false;
+            }
+            return true;
+        }
+        private bool ValidarNombreYApellido()
+        {
+            if (Regex.IsMatch(txtNombre.Text, @"^[a-zA-Z]+$") && Regex.IsMatch(txtApellido.Text, @"^[a-zA-Z]+$"))
+            {
+                return true;
+            }
+            else { return false; }
+        }
+        private bool ValidarCorreoElectronico()
+        {
+            if (Regex.IsMatch(txtEmail.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                return true;
+            }
+            else { return false; }
+        }
+        private bool ValidarTelefono()
+        {
+            if(Regex.IsMatch(txtTelefono.Text, @"^[0-9 ]+$"))
+            {
+                return true;
+            }
+            else { return false; }
+        }
+        private bool ValidarUsername()
+        {
+            if (txtUsername.Text != string.Empty)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

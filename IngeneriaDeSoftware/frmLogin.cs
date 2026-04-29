@@ -35,34 +35,38 @@ namespace UI
         {
             try
             {
-                int resultado = LoginService.Login(txtUsuario.Text, txtPassword.Text);
-                switch (resultado)
+                if (txtUsuario.Text == string.Empty || txtPassword.Text == string.Empty) { MessageBox.Show("Debe ingresar el Usuario y la Contraseña para continuar."); }
+                else
                 {
-                    case 1:
-                        this.Close();
-                        break;
-                    case 2:
-                        MessageBox.Show("Usuario inexistente");
-                        break;
-                    case 3:
-                        MessageBox.Show("Password incorrecto");
-                        break;
-                    case 4:
-                        MessageBox.Show("Usuario bloqueado");
-                        break;
-                    case 5:
-                        MessageBox.Show("Usuario eliminado");
-                        break;
-                    case 6:
-                        MessageBox.Show("Cambio de password requerido");
-                        frmCambioPassword f = new frmCambioPassword();
-                        f.FormClosed += ClaveModificada;
-                        this.Visible = false;
-                        f.Show();
-                        break;
-                    default:
-                        MessageBox.Show("Error");
-                        break;
+                    int resultado = LoginService.Login(txtUsuario.Text, txtPassword.Text);
+                    switch (resultado)
+                    {
+                        case 1:
+                            this.Close();
+                            break;
+                        case 2:
+                            MessageBox.Show("Usuario inexistente");
+                            break;
+                        case 3:
+                            MessageBox.Show("Password incorrecto");
+                            break;
+                        case 4:
+                            MessageBox.Show("Usuario bloqueado");
+                            break;
+                        case 5:
+                            MessageBox.Show("Usuario eliminado");
+                            break;
+                        case 6:
+                            MessageBox.Show("Cambio de password requerido");
+                            frmCambioPassword f = new frmCambioPassword();
+                            f.FormClosed += ClaveModificada;
+                            this.Visible = false;
+                            f.Show();
+                            break;
+                        default:
+                            MessageBox.Show("Error");
+                            break;
+                    }
                 }
             }
             catch (Exception ex)
