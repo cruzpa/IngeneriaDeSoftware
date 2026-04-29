@@ -335,7 +335,7 @@ namespace UI
         }
         private bool ValidarNombreYApellido()
         {
-            if (Regex.IsMatch(txtNombre.Text, @"^[a-zA-Z]+$") && Regex.IsMatch(txtApellido.Text, @"^[a-zA-Z]+$"))
+            if (Regex.IsMatch(txtNombre.Text, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s']+$") && Regex.IsMatch(txtApellido.Text, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s']+$"))
             {
                 return true;
             }
