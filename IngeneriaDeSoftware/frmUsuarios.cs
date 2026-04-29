@@ -67,7 +67,7 @@ namespace UI
                 dt.Columns.Add("Bloqueado");
                 dt.Columns.Add("Eliminado");
                 if (usuarios == null) return;
-                foreach (BE_Usuario u in usuarios)
+                foreach (BE_Usuario u in usuarios.OrderBy(x => x.Id))
                 {
                     DataRow dr = dt.NewRow();
                     dr[0] = u.Id;
@@ -98,6 +98,7 @@ namespace UI
                 }
                 catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
             }
+            LimpiarInputs();
         }
         private void dgvUsuarios_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
@@ -144,7 +145,12 @@ namespace UI
                     usuario.Apellido = txtApellido.Text;
                     usuario.Email = txtEmail.Text;
                     usuario.Telefono = txtTelefono.Text;
-                    UsuarioService.Crear(usuario);
+                    int res = UsuarioService.Crear(usuario);
+                    if(res <= 0)
+                    {
+                        MessageBox.Show($"No fue posible crear el usuario: {usuario.Username}");
+                    }
+
                     CargarListaUsuarios(true);
                     ActualizarGrillaUsuarios();
                 }
@@ -172,14 +178,18 @@ namespace UI
                 } 
                 BE_Usuario usuario = new BE_Usuario();
                 usuario.Id = int.Parse(dgvUsuarios.SelectedRows[0].Cells["Id"].Value.ToString());
-                
+                int res = 0;
                 if (bool.Parse(dgvUsuarios.SelectedRows[0].Cells["Eliminado"].Value.ToString())) //Si eliminado = true
                 {
-                    UsuarioService.Habilitar(usuario);
+                    res = UsuarioService.Habilitar(usuario);
                 }
                 else //Si eliminado = false
                 {
-                    UsuarioService.Eliminar(usuario);
+                    res = UsuarioService.Eliminar(usuario);
+                }
+                if (res <= 0)
+                {
+                    MessageBox.Show($"No fue posible borrar el usuario: {usuario.Username}");
                 }
 
                 CargarListaUsuarios(true);
@@ -293,7 +303,11 @@ namespace UI
                     usuario.Apellido = txtApellido.Text;
                     usuario.Email = txtEmail.Text;
                     usuario.Telefono = txtTelefono.Text;
-                    UsuarioService.Modificar(usuario);
+                    int res = UsuarioService.Modificar(usuario);
+                    if( res <= 0)
+                    {
+                        MessageBox.Show($"No fue posible editar el usuario: {usuario.Username}");
+                    }
                     CargarListaUsuarios(true);
                     ActualizarGrillaUsuarios();
                 }
@@ -367,6 +381,17 @@ namespace UI
             {
                 return false;
             }
+        }
+        private void LimpiarInputs()
+        {
+            txtUsername.Text = string.Empty;
+            txtNombre.Text = string.Empty;
+            txtApellido.Text = string.Empty;
+            txtEmail.Text = string.Empty;
+            txtTelefono.Text = string.Empty;
+            dgvUsuarios.ClearSelection();
+            btnBorrar.Text = "Borrar";
+            btnDesbloquear.Enabled = false;
         }
     }
 }
