@@ -13,7 +13,8 @@ namespace DAL
         public void Abrir()
         {
             conexion = new SqlConnection();
-            conexion.ConnectionString = "Initial catalog=TP; Data Source=DESKTOP-JRRFOTR.;integrated security=SSPI";
+            //conexion.ConnectionString = "Initial catalog=TP; Data Source=DESKTOP-JRRFOTR.;integrated security=SSPI";
+            conexion.ConnectionString = "Initial catalog=TP; Data Source=.;integrated security=SSPI";
             conexion.Open();
         }
         public void Cerrar()
@@ -64,8 +65,9 @@ namespace DAL
             {
                 filas = cmd.ExecuteNonQuery();
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 filas = -1;
             }
             return filas;
