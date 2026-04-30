@@ -67,7 +67,6 @@ namespace DAL
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
                 filas = -1;
             }
             return filas;
