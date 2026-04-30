@@ -53,7 +53,7 @@
             this.btnCerrar.Location = new System.Drawing.Point(849, 423);
             this.btnCerrar.Name = "btnCerrar";
             this.btnCerrar.Size = new System.Drawing.Size(75, 23);
-            this.btnCerrar.TabIndex = 0;
+            this.btnCerrar.TabIndex = 11;
             this.btnCerrar.Text = "Cerrar";
             this.btnCerrar.UseVisualStyleBackColor = true;
             this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
@@ -69,7 +69,7 @@
             this.dgvUsuarios.ReadOnly = true;
             this.dgvUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvUsuarios.Size = new System.Drawing.Size(912, 262);
-            this.dgvUsuarios.TabIndex = 1;
+            this.dgvUsuarios.TabIndex = 0;
             this.dgvUsuarios.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsuarios_CellEnter);
             // 
             // lblUsername
@@ -86,14 +86,14 @@
             this.txtUsername.Location = new System.Drawing.Point(166, 290);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(219, 20);
-            this.txtUsername.TabIndex = 3;
+            this.txtUsername.TabIndex = 1;
             // 
             // btnCrear
             // 
             this.btnCrear.Location = new System.Drawing.Point(21, 423);
             this.btnCrear.Name = "btnCrear";
             this.btnCrear.Size = new System.Drawing.Size(75, 23);
-            this.btnCrear.TabIndex = 4;
+            this.btnCrear.TabIndex = 6;
             this.btnCrear.Text = "Crear";
             this.btnCrear.UseVisualStyleBackColor = true;
             this.btnCrear.Click += new System.EventHandler(this.btnCrear_Click);
@@ -103,7 +103,7 @@
             this.btnBorrar.Location = new System.Drawing.Point(183, 423);
             this.btnBorrar.Name = "btnBorrar";
             this.btnBorrar.Size = new System.Drawing.Size(75, 23);
-            this.btnBorrar.TabIndex = 5;
+            this.btnBorrar.TabIndex = 8;
             this.btnBorrar.Text = "Borrar";
             this.btnBorrar.UseVisualStyleBackColor = true;
             this.btnBorrar.Click += new System.EventHandler(this.btnBorrar_Click);
@@ -113,7 +113,7 @@
             this.btnReestablecerPassword.Location = new System.Drawing.Point(345, 423);
             this.btnReestablecerPassword.Name = "btnReestablecerPassword";
             this.btnReestablecerPassword.Size = new System.Drawing.Size(138, 23);
-            this.btnReestablecerPassword.TabIndex = 6;
+            this.btnReestablecerPassword.TabIndex = 10;
             this.btnReestablecerPassword.Text = "Reestablecer contraseña";
             this.btnReestablecerPassword.UseVisualStyleBackColor = true;
             this.btnReestablecerPassword.Click += new System.EventHandler(this.btnReestablecerPassword_Click);
@@ -123,7 +123,7 @@
             this.btnDesbloquear.Location = new System.Drawing.Point(264, 423);
             this.btnDesbloquear.Name = "btnDesbloquear";
             this.btnDesbloquear.Size = new System.Drawing.Size(75, 23);
-            this.btnDesbloquear.TabIndex = 7;
+            this.btnDesbloquear.TabIndex = 9;
             this.btnDesbloquear.Text = "Desbloquear";
             this.btnDesbloquear.UseVisualStyleBackColor = true;
             this.btnDesbloquear.Click += new System.EventHandler(this.btnDesbloquear_Click);
@@ -133,28 +133,28 @@
             this.txtNombre.Location = new System.Drawing.Point(166, 316);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(219, 20);
-            this.txtNombre.TabIndex = 8;
+            this.txtNombre.TabIndex = 2;
             // 
             // txtApellido
             // 
             this.txtApellido.Location = new System.Drawing.Point(166, 342);
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(219, 20);
-            this.txtApellido.TabIndex = 9;
+            this.txtApellido.TabIndex = 3;
             // 
             // txtEmail
             // 
             this.txtEmail.Location = new System.Drawing.Point(166, 368);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(219, 20);
-            this.txtEmail.TabIndex = 10;
+            this.txtEmail.TabIndex = 4;
             // 
             // txtTelefono
             // 
             this.txtTelefono.Location = new System.Drawing.Point(166, 394);
             this.txtTelefono.Name = "txtTelefono";
             this.txtTelefono.Size = new System.Drawing.Size(219, 20);
-            this.txtTelefono.TabIndex = 11;
+            this.txtTelefono.TabIndex = 5;
             // 
             // lblNombre
             // 
@@ -197,7 +197,7 @@
             this.btnModificar.Location = new System.Drawing.Point(102, 423);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(75, 23);
-            this.btnModificar.TabIndex = 16;
+            this.btnModificar.TabIndex = 7;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
             this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);

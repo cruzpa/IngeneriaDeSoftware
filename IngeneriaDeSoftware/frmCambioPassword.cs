@@ -44,5 +44,14 @@ namespace UI
                 catch { throw new Exception("HAY QUE HACER EL LOG DE BITACORA LOCAL EN TXT"); }
             }
         }
+
+        private void txtPassword_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnGuardar.PerformClick();
+                e.Handled = true;
+            }
+        }
     }
 }
