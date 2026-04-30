@@ -24,7 +24,7 @@ namespace UI
         {
             try
             {
-                if (txtPassword.Text == string.Empty) { MessageBox.Show("Debe ingresar una Contraseña para continuar"); }
+                if (ValidarDatos()) { MessageBox.Show("Debe ingresar una Contraseña para continuar"); }
                 else
                 {
                     BE_Usuario usuario = SessionManager.GetInstance.usuario;
@@ -52,6 +52,12 @@ namespace UI
                 btnGuardar.PerformClick();
                 e.Handled = true;
             }
+        }
+
+        private bool ValidarDatos()
+        {
+            if (txtPassword.Text == string.Empty) { return false; }
+            else return true;
         }
     }
 }
