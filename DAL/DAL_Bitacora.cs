@@ -21,7 +21,7 @@ namespace DAL
                 List<SqlParameter> parametros = new List<SqlParameter>
                 {
                     acceso.CrearParametro("@Username", bitacora.Username),
-                    acceso.CrearParametro("@FechaYHora", bitacora.FechaYHora.ToString()),
+                    acceso.CrearParametro("@FechaYHora", bitacora.FechaYHora),
                     acceso.CrearParametro("@Tipo", bitacora.Tipo),
                     acceso.CrearParametro("@Descripcion", bitacora.Descripcion)
                 };
@@ -39,8 +39,8 @@ namespace DAL
             {
                 List<SqlParameter> parametros = new List<SqlParameter>
                 {
-                    acceso.CrearParametro("@FechaInicio", fechaInicio.ToString()),
-                    acceso.CrearParametro("@FechaFin", fechaFin.ToString())
+                    acceso.CrearParametro("@FechaInicio", fechaInicio),
+                    acceso.CrearParametro("@FechaFin", fechaFin)
                 };
 
                 SqlDataReader reader = acceso.Leer("select Id, Username, FechaYHora, Tipo, Descripcion from Bitacora where FechaYHora >= @FechaInicio and FechaYHora <= @FechaFin", parametros);
@@ -68,8 +68,8 @@ namespace DAL
                 List<SqlParameter> parametros = new List<SqlParameter>
                 {
                     acceso.CrearParametro("@Tipo", tipo),
-                    acceso.CrearParametro("@FechaInicio", fechaInicio.ToString()),
-                    acceso.CrearParametro("@FechaFin", fechaFin.ToString())
+                    acceso.CrearParametro("@FechaInicio", fechaInicio),
+                    acceso.CrearParametro("@FechaFin", fechaFin)
                 };
                 SqlDataReader reader = acceso.Leer("select Id, Username, FechaYHora, Tipo, Descripcion from Bitacora where FechaYHora >= @FechaInicio and FechaYHora <= @FechaFin and Tipo = @Tipo", parametros);
                 while (reader.Read())

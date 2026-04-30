@@ -14,7 +14,8 @@ namespace DAL
         {
             conexion = new SqlConnection();
             //conexion.ConnectionString = "Initial catalog=TP; Data Source=DESKTOP-JRRFOTR.;integrated security=SSPI";
-            conexion.ConnectionString = "Initial catalog=TP; Data Source=.;integrated security=SSPI";
+            //conexion.ConnectionString = "Initial catalog=TP; Data Source=.;integrated security=SSPI";
+            conexion.ConnectionString = "Initial catalog=TP; Data Source=DESKTOP-CLTJMFV\\SQLEXPRESS;integrated security=SSPI";
             conexion.Open();
         }
         public void Cerrar()
@@ -97,6 +98,12 @@ namespace DAL
         {
             SqlParameter p = new SqlParameter(name, value);
             p.DbType = System.Data.DbType.Single;
+            return p;
+        }
+        public SqlParameter CrearParametro(string name, DateTime value)
+        {
+            SqlParameter p = new SqlParameter(name, value);
+            p.DbType = System.Data.DbType.DateTime;
             return p;
         }
     }

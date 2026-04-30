@@ -107,6 +107,8 @@ namespace UI
         {
             try
             {
+                if (lista == null) return;
+                if (lista.Count == 0) return;
                 dgvBitacora.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
                 dgvBitacora.Columns["Descripcion"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dgvBitacora.Columns["Descripcion"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
